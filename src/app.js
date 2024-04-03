@@ -4,6 +4,8 @@ const ejs = require("ejs");
 const cors = require("cors");
 const app = express();
 const path = require("path");
+const bcrypt = require('bcryptjs');
+
 var bodyparser = require("body-parser");
 const PORT = process.env.PORT || 8002;
 const static_path = path.join(__dirname, "../public");
@@ -313,38 +315,44 @@ app.get("/users", (req, res) => {
     }
   });
 });
+
 app.post('/sign', (req, res) => {
   const { name, clas, contact, email, password, confirmpassword, gender } = req.body;
 
-  
-  let errorMessage = "";
-
   // Check if password matches confirm password
   if (password !== confirmpassword) {
-     
-      errorMessage = "Passwords do not match";
-      
-      return res.render('registration', { errorMessage });
+      return res.render('registration', { errorMessage: "Passwords do not match" });
   }
 
-  
-  connection.query('INSERT INTO students (name, clas, contact, email, password, confirmpassword, gender) VALUES (?,?,?,?,?,?,?)', [name, clas, contact, email, password, confirmpassword, gender], (error, results, fields) => {
-      if (error) {
-          console.log(error);
+  // Hash the password
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+      if (err) {
+          console.error('Error hashing password: ', err);
           return res.status(500).send("Error registering user");
       }
 
-      // Generate JWT token
-      const accessToken = jwt.sign({ email: email }, "mynameismandariamdoingprojectononlinebookrentalsystem", { expiresIn: '2h' });
-      console.log("Generated token:", accessToken);
-      res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 });
+      // Store the hashed password in the database
+      connection.query('INSERT INTO reders (name, clas, contact, email, password, confirmpassword, gender) VALUES (?,?,?,?,?,?,?)', [name, clas, contact, email, hashedPassword, hashedPassword, gender], (error, results, fields) => {
+          if (error) {
+              // Handle unique email constraint error
+              if (error.code === 'ER_DUP_ENTRY') {
+                  return res.render('registration', { errorMessage: "Email already exists" });
+              } else {
+                  console.log(error);
+                  return res.status(500).send("Error registering user");
+              }
+          }
 
-      
-      
-      res.redirect('/sign');
-      console.log('User added:', name, clas, contact, email, password, confirmpassword, gender);
+          // Generate JWT token
+          const accessToken = jwt.sign({ email: email }, "mynameismandariamdoingprojectononlinebookrentalsystem", { expiresIn: '2h' });
+          console.log("Generated token:", accessToken);
+          res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 });
+          res.redirect('/sign');
+          console.log('User added:', name, clas, contact, email, hashedPassword, hashedPassword, gender);
+      });
   });
 });
+
 
 app.get('/sign', (req, res) => {
   const errorMessage = req.query.error || "";
@@ -357,9 +365,10 @@ app.get('/regi', (req, res) => {
 });
 
 
+// Sign-In Endpoint
 app.post('/home', (req, res) => {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM students WHERE email = ?';
+  const sql = 'SELECT * FROM reders WHERE email = ?';
   connection.query(sql, [email], (err, results) => {
       if (err) {
           console.error('Error retrieving user: ', err);
@@ -367,33 +376,38 @@ app.post('/home', (req, res) => {
       } else {
           if (results.length > 0) {
               const user = results[0];
-              if (password === user.password) {
-                  const accessToken = jwt.sign({ email: user.email }, "mynameismandariamdoingprojectononlinebookrentalsystem", { expiresIn: '2h' });
-                  console.log("Generated token:", accessToken);
-                  res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 }); // Set JWT in a cookie (optional)
-                  connection.query("SELECT * FROM featured ", (error, result) => {
-                      if (error) {
-                          console.log(error);
-                          res.status(401).send("Internal Server Error");
-                      } else {
-                          console.log(result);
-                          res.render('dashboard', { result: result });
-                      }
-                  });
-
-              } else {
-                  // Password doesn't match, redirect to sign-in page with error
-                  res.redirect('/sign?error=Incorrect email or password');
-              }
+              // Compare the hashed password
+              bcrypt.compare(password, user.password, (err, result) => {
+                  if (err) {
+                      console.error('Error comparing passwords: ', err);
+                      return res.send('Error logging in');
+                  }
+                  if (result) {
+                      const accessToken = jwt.sign({ email: user.email }, "mynameismandariamdoingprojectononlinebookrentalsystem", { expiresIn: '2h' });
+                      console.log("Generated token:", accessToken);
+                      res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 }); // Set JWT in a cookie (optional)
+                      connection.query("SELECT * FROM featured ", (error, result) => {
+                          if (error) {
+                              console.log(error);
+                              res.status(401).send("Internal Server Error");
+                          } else {
+                              console.log(result);
+                              res.render('dashboard', { result: result });
+                          }
+                      });
+                  } else {
+                      // Password doesn't match, redirect to sign-in page with error
+                      res.redirect('/sign?error=Incorrect email or password');
+                  }
+              });
           } else {
               // No user found with the given email, redirect to sign-in page with error
-              res.redirect('/sign?error=Incorrect email or password');
+              res.redirect('/sign?error=Email not registered');
           }
-
       }
-
   });
 });
+
 
 // Verify JWT token
 function authenticateToken(req, res, next) {
