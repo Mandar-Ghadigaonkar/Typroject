@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="./public/css/forgotpassword.css">
+</head>
+<body>
+    <div class="container">
+        <form id="forgotPasswordForm">
+            <h2>Forgot Password</h2>
+            <div class="input-field">
+                <input type="email" id="email" required>
+                <label for="email">Enter your email</label>
+            </div>
+            <button type="submit">Send OTP</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var email = document.getElementById('email').value;
+    
+            // Validate the email address
+            if (!validateEmail(email)) {
+                // Show an error dialog
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Please enter a valid email address.',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+    
+            // Generate the OTP
+            var otp = generateOTP();
+    
+            // Send the OTP to the user's email address
+            fetch('/sendotp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    otp: otp
+                })
+            }).then(function(response) {
+                if (response.ok) {
+                    // Show a confirmation dialog
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'OTP Sent!',
+                        text: 'An OTP has been sent to your email address.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect the user to the OTP verification page
+                            window.location.href = 'verifyotp.html';
+                        }
+                    });
+                } else {
+                    // Show an error dialog
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to send the OTP. Please try again.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }).catch(function(error) {
+                // Show an error dialog
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to send the OTP. Please try again.',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    
+        // Function to generate a random 6-digit OTP
+        function generateOTP() {
+            var digits = '0123456789';
+            var otp = '';
+            for (var i = 0; i < 6; i++) {
+                otp += digits[Math.floor(Math.random() * 10)];
+            }
+            return otp;
+        }
+    
+        // Function to validate the email address
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+    </script>
+</body>
+</html>

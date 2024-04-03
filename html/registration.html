@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    color: #fff;
+    display: flex;
+    height: 100vh;
+    background: url(image/library-book-bookshelf-read.jpg);
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.container {
+    max-width: 700px;
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 25px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #000000;
+}
+
+.container .title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+    padding: 0 0 20px 0;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.container .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(175deg, #000000,#ffffff);
+}
+
+.container form .stud-details {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form .stud-details .input-box {
+    margin-bottom: 15px;
+    width: 48%;
+    color: white;
+}
+
+.stud-details .input-box .info {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.stud-details .input-box input {
+    height: 45px;
+    width: 100%;
+    color: black;
+    font-weight: 500;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.input-box input::placeholder {
+    color: #000000;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.stud-details .input-box input:focus,
+.stud-details .input-box input:valid {
+    border-color: #9b59b6;
+}
+
+form .gender .gender-title{
+    /* display: flex; */
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    /* border-bottom: 2px solid; */
+    /* color: black; */
+}
+
+form .gender .category{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* display: flex;
+    width: 40%;
+    margin: 14px 0;
+    justify-content: space-between; */
+}
+
+form .button {
+    text-align: center;
+}
+
+form .button button {
+    padding: 10px 0;
+    margin-top: 10px;
+    height: 100%;
+    width: 50%;
+    outline: none;
+    color: #020202;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #fff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+form .button button:hover {
+    background: black;
+    color: white;
+}
+
+form .input-box b {
+    color: red;
+}
+
+form .input-box i {
+    color: green;
+    margin-bottom: 1px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="title">Registration Form</div>
+    <form id="registrationForm" action="http://localhost:8000/userss"  method="POST">
+        <div class="stud-details">
+            <div class="input-box">
+                <span class="info">Full Name:</span>
+                <input type="text" id="name" name="name" placeholder="Enter Your Full Name" required>
+            </div>
+            <div class="input-box">
+                <span class="info">Class:</span>
+                <input type="text" id="class" name="class" placeholder="Enter Your class" required>
+            </div>
+            <div class="input-box">
+                <span class="info">Contact No:</span>
+                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}"  placeholder="Enter Your Contact No" required>
+            </div>
+            <div class="input-box">
+                <span class="info">Email:</span>
+                <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+            </div>
+            <div class="input-box">
+                <span class="info">Password:</span>
+                <input type="password" id="password" name="password" minlength="7" maxlength="10"  placeholder="Enter Your Password" required>
+            </div>
+            <div class="input-box">
+                <span class="info">Confirm Password:</span>
+                <input type="password" id="confirmPassword" name="confirmPassword" minlength="7" maxlength="10" placeholder="Confirm your Password" required>
+            </div>
+            <div class="gender">
+                <span class="gender-title">Gender</span>
+                <div class="category"></div>
+
+                 <input type="radio" name="gender" value="Male" required >Male                
+                 <input type="radio" name="gender" value="Female" required>Female
+                 <input type="radio" name="gender" value="Other" required>Other           
+                
+            </div>
+        </div>
+        <div class="button">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+<script>
+    const form = document.getElementById('registrationForm');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const contactInput = document.getElementById('contact');
+    
+    // Add event listener for form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+    
+        // Validate password and confirm password
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            alert("Passwords do not match");
+            return;
+        }
+    
+        // Submit the form if all validations pass
+        alert("Form submitted successfully!");
+        window.location.href = 'sigin.html';
+    });
+    
+    // Add event listener for contact input to validate against non-digit characters and length
+    contactInput.addEventListener('input', function(event) {
+        const contactValue = event.target.value;
+    
+        // Remove any non-digit characters
+        const sanitizedValue = contactValue.replace(/\D/g, '');
+    
+        // Update input value to sanitized value
+        event.target.value = sanitizedValue;
+    
+        // Validate length
+        if (sanitizedValue.length > 10) {
+            alert("Contact number should not exceed 10 digits");
+            event.target.value = sanitizedValue.slice(0, 10); // Trim to 10 digits
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./css/adminbcom1.css">
+</head>
+
+<body>
+    <!-------------------------------------------------------- navbar --------------------------------------------------------------------->
+    
+    
+    <nav>
+        <div class="navbar">
+            <h1>Admin Dashboard</h1>
+            <ul class="nav-links">
+                <li><a href="/adminhome">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!------------------------------------------------------ add boks ------------------------------------------------------------------>
+
+    <section id="userData">
+
+        <!-- Form container -->
+        <div class="form-container">
+            <h2>Add Books</h2>
+            <form action="/add-book" method="POST">
+                <input type="text" name="name" placeholder="Book Name" required>
+                <input type="text" name="publisher" placeholder="Publisher" required>
+                <input type="number" name="price" placeholder="Price" required>
+                <input type="text" name="image" placeholder="Image URL" required>
+                <button type="submit" class="bt">Add Book</button>
+            </form>
+        </div>
+        <h2>Books Data</h2>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Publisher</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="userDataBody">
+                <% userData.forEach(book=> { %>
+                    <tr>
+                        <td>
+                            <%= book.id %>
+                        </td>
+                        <td>
+                            <%= book.name %>
+                        </td>
+                        <td>
+                            <%= book.publisher %>
+                        </td>
+                        <td>
+                            <%= book.price %>
+                        </td>
+                        <td>
+                            <%= book.image %>
+                        </td>
+                        <td>
+                            <form action="/delete-book" method="POST">
+                                <input type="hidden" name="bookId" value="<%= book.id %>">
+                                <button type="submit" class="btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </section>
+
+  
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Sales and User Distribution</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link rel="stylesheet" href="./css/adminana.css">
+</head>
+<body>
+  <nav>
+    <div class="navbar">
+        <h1>Admin Dashboard</h1>
+        <ul class="nav-links">
+            <li><a href="/adminhome">Home</a></li>
+            <!-- <li><a href="#bookAnalysis">Book Analysis</a></li> -->
+        </ul>
+    </div>
+</nav>
+  
+    <div class="container">
+        <div class="don">
+            <h2>Bookstore Sales and Growth Distribution</h2>
+        </div>
+
+        <div class="chart-container">
+            <div>
+                <h3>Sales and Growth</h3>
+                <canvas id="salesChart" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <h3>Sales Distribution</h3>
+                <canvas id="distributionChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+
+        <div class="works">
+            <h3>Our Analysis</h3>
+            <p>The following charts represent the performance and distribution data of a bookstore over several quarters.</p>
+            <h3>1. Sales and Growth Chart:</h3>
+            <p>This chart illustrates the bookstore's sales performance and growth percentage over consecutive quarters. The blue line represents the sales figures (in USD) for each quarter. The green line indicates the percentage growth compared to the previous quarter.</p>
+            <h3>2. Sales Distribution Pie Chart:</h3>
+            <p>This pie chart showcases the distribution of bookstore users across different quarters. Each segment represents the percentage of users in a particular quarter. Colors are used to differentiate between quarters for better visualization.</p>
+            <p>These charts provide a comprehensive overview of the bookstore's sales trends and user engagement over time. Analysis of these charts can help in identifying patterns, assessing growth rates, and making informed decisions for future strategies and improvements.</p>
+        </div>
+    </div>
+
+   <script src="./js/adminana.js"></script>
+</body>
+</html>
+
+<!-- https://chat.openai.com/c/abf680aa-248a-4818-9f7f-b9f434a71324 -->

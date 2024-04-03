@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Confirmation</title>
+    <style>
+        body,
+        h1,
+        ul,
+        li,
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            /* background: linear-gradient(to top,aqua, white); */
+            line-height: 1.4;
+            font-weight: 600;
+            color: #333;
+            height: 0%;
+
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: aqua;
+            border: 5px solid #000000;
+            border-radius: 20px;
+            box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.645);
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 10px;
+            text-align: center;
+            /* text-decoration: underline black; */
+            color: black;
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-top: 20px;
+            border-bottom: 2px solid #ff0000;
+            margin-bottom: 10px;
+            text-align: center;
+            color: black;
+        }
+
+        h3 {
+            margin-bottom: 5px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .name {
+            color: rgb(0, 0, 0);
+            font-size: 1.2rem;
+            font-style: inherit;
+            /* -webkit-text-stroke: 2px #383d52; */
+            position: relative;
+            font-weight: 900;
+            color: red;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            /* opacity: 0; */
+            /* animation: fadeIn 4s ease forwards; */
+        }
+
+        /* .name::before {
+            content: attr(data-text);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            color: rgb(255, 0, 0);
+            /* text-shadow: 0px 0px 12px yellow; */
+            /* -webkit-text-stroke: 0px #383d52; */
+
+            /* overflow: hidden;
+            /* animation: animate 6s liner infinite; */
+ 
+
+        
+
+      
+
+        p {
+            margin-bottom: 5px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+
+        ul {
+            list-style-type: none;
+            text-align: left;
+        }
+
+
+        li {
+            margin-bottom: 3px;
+            text-align: left;
+
+        }
+
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        span {
+            margin-left: 4px;
+            font-style: italic;
+            font-size: medium;
+            font-weight: 800;
+            color: red;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Order Invoice</h1>
+        <h3>Thank you for your order, <span data-text="<%=name%>" class="name">
+                <%= name %>
+            </span>!</h3>
+        <p>Order ID: <span>
+                <%= id %>
+            </span></p>
+        <p>Class: <span>
+                <%= clas %>
+            </span></p>
+        <p>Contact: <span>
+                <%= contact %>
+            </span></p>
+        <p>Email: <span>
+                <%= email %>
+            </span> </p>
+        <p>Rental Days: <span>
+                <%= rentalDays %>
+            </span></p>
+        <p>Total: <span>
+                <%= total %>
+            </span></p>
+        <h2>Books Names:</h2>
+        <ul>
+            <% items.forEach(function(item) { %>
+                <li> <span>
+                        <%= item %>
+                    </span></li>
+                <% }); %>
+        </ul>
+    </div>
+</body>
+
+</html>

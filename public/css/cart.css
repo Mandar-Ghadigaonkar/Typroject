@@ -1,0 +1,420 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+}
+
+body {
+  min-height: 100vh;
+}
+
+
+nav {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+
+height: 101px;
+background: linear-gradient(to top, aqua, white);
+background-position: center center;
+
+/* box-shadow: 0 7px 50px rgb(255, 255, 255); */
+z-index: 99;
+}
+nav .navbar {
+height: 100%;
+max-width: 1247px;
+width: 100%;
+font-family:Georgia, 'Times New Roman', Times, serif; 
+margin-left: 192px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin: auto;
+/* background: red; */
+padding: 15px 59px;
+}
+.navbar .logo img {
+width: 189px;
+height: 130px;
+cursor: pointer;
+margin: 5px -10rem;
+}
+
+nav .navbar .nav-links {
+line-height: 70px;
+height: 100%;
+}
+nav .navbar .links {
+display: flex;
+}
+
+
+nav .navbar .links li {
+position: relative;
+display: flex;
+align-items: center;
+justify-content: space-between;
+list-style: none;
+padding: 0 14px;
+}
+
+
+
+nav .navbar .links li a {
+height: 100%;
+text-decoration: none;
+white-space: nowrap;
+font-family:Georgia, 'Times New Roman', Times, serif; 
+color: #000000;
+font-size: 15px;
+font-weight: 800;
+}
+.links li:hover .htmlcss-arrow,
+.links li:hover .js-arrow{
+transform: rotate(180deg);
+}
+nav .navbar .links li .arrow{
+/* background: red; */
+height: 100%;
+width: 22px;
+line-height: 70px;
+text-align: center;
+display: inline-block;
+color: #000000;
+transition: all 0.3s ease;
+}
+nav .navbar .links li .sub-menu{
+position: absolute;
+top: 70px;
+left: 0;
+line-height: 40px;
+background-color: aqua;
+/* background: linear-gradient(to left, aqua, white); */
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+border-radius: 0 0 4px 4px;
+display: none;
+z-index: 2;
+}
+nav .navbar .links li:hover .htmlCss-sub-menu,
+nav .navbar .links li:hover .js-sub-menu{
+display: block;
+}
+.navbar .links li .sub-menu li{
+padding: 0 22px;
+border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.navbar .links li .sub-menu a{
+color: #000000;
+font-size: 15px;
+font-family:Georgia, 'Times New Roman', Times, serif; 
+font-weight: 700;
+}
+.navbar .links li .sub-menu .more-arrow{
+line-height: 40px;
+}
+/* .navbar .links li .htmlCss-more-sub-menu{
+/* line-height: 40px; 
+} */
+.navbar .links li .sub-menu .more-sub-menu{
+position: absolute;
+top: 0;
+left: 100%;
+border-radius: 0 4px 4px 4px;
+z-index: 1;
+display: none;
+}
+.links li .sub-menu .more:hover .more-sub-menu{
+display: block;
+}
+.navbar .search-box {
+position: relative;
+height: 40px;
+/* margin-left: 40px; */
+width: 40px;
+}
+.navbar .search-box i {
+position: absolute;
+height: 100%;
+width: 100%;
+line-height: 40px;
+text-align: center;
+margin-left: 197px;
+font-size: 22px;
+color: #000000;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+.navbar .search-box .input-box {
+position: absolute;
+right: calc(100% - 40px);
+top: 80px;
+height: 60px;
+font-family:Georgia, 'Times New Roman', Times, serif; 
+margin-left: 197px;
+width: 300px;
+background: #00edf1;
+border-radius: 6px;
+opacity: 0;
+pointer-events: none;
+/* transition: all 0.4s ease; */
+}
+.navbar.showInput .search-box .input-box {
+top: 35px;
+top: 35px;
+left: 1%;
+opacity: 1;
+font-family:Georgia, 'Times New Roman', Times, serif; 
+margin-left: -64px;
+pointer-events: auto;
+background: #00edf1;
+}
+.search-box .input-box::before {
+content: "";
+position: absolute;
+height: 20px;
+width: 20px;
+margin-left: 197px;
+background: #00edf1;
+right: 10px;
+top: -6px;
+transform: rotate(45deg);
+}
+.search-box .input-box input {
+position: absolute;
+top: 50%;
+font-family:Georgia, 'Times New Roman', Times, serif; 
+left: 50%;
+border-radius: 4px;
+transform: translate(-50%, -50%);
+height: 35px;
+width: 280px;
+outline: none;
+padding: 0 15px;
+font-size: 16px;
+border: none;
+}
+.navbar .nav-links .sidebar-logo {
+display: none;
+}
+.navbar .bx-menu {
+display: none;
+}
+
+@media (max-width:920px) {
+  nav .navbar {
+    max-width: 100%;
+    padding: 0 25px;
+  }
+
+  nav .navbar .logo a {
+    font-size: 27px;
+  }
+
+  nav .navbar .links li {
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+
+  nav .navbar .links li a {
+    font-size: 15px;
+  }
+}
+.cart {
+position: relative;
+height: 40px;
+width: 40px;
+}
+.cart i {
+position: absolute;
+height: 100%;
+width: 100%;
+line-height: 40px;
+text-align: center;
+margin-left: -35px;
+font-size: 19px;
+color: #000000;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+
+#cart-container {
+  margin-top: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cart-container table {
+  width: 100%;
+  max-width: 800px;
+  margin: -156px 37px 0px -382px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid #ddd;
+  border-radius: 13px;
+  overflow: hidden;
+  
+}
+
+#cart-container thead {
+  font-weight: 600;
+  background-color: #000000;
+  color: white;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+}
+
+#cart-container thead td {
+  padding: 12px 0;
+  text-align: center;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+}
+
+#cart-container tbody td {
+  padding: 10px;
+  text-align: center;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  border-top: 3px solid #000000;
+}
+
+#cart-container tbody img {
+  width: 100px;
+  aspect-ratio: 2/2;
+  object-fit: contain;
+}
+
+/* Styling for the remove button */
+.remove-btn {
+  background-color: #ff0303;
+  color: rgb(255, 255, 255);
+  font-weight: 900;
+  font-size: 14px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-btn:hover {
+  background-color: #c72525;
+}
+
+.com{
+    /* border: 2px solid black; */
+    position:fixed;
+    width: 30%;
+    margin-top: -28%;
+    margin-left: 68%;
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+    line-height: 20px;
+}
+.com h4{
+    font-size: 23px;
+    text-align: center;
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+    /* text-decoration: underline red; */
+    border-bottom: 4px solid red;
+    margin-bottom: 10px;
+}
+.com h6{
+    font-size: small;
+    color: red;
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+   
+}
+
+
+.total {
+  border: none;
+  padding: 20px;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  width: 17%;
+  position: fixed;
+  bottom: 20px;
+  right: 130px;
+  background: linear-gradient(to right, aqua, white);
+  border-radius: 30px;
+  box-shadow: 20px 20px 40px black;
+  color: #000;
+  /* font-family: 'Roboto', sans-serif; */
+  transition: all 0.3s ease;
+  animation: slideIn 0.5s ease forwards;
+  transform: translateY(100%);
+  z-index: 999;
+}
+
+.total:hover {
+  transform: translateY(-5px);
+  box-shadow: 10px 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.total h6{
+  margin-bottom: 8px;
+  font-size: 22px;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+
+
+
+.gtotal p {
+  /* margin: 0; */
+  margin-left: 154px;
+  margin-top: -40px;
+  font-weight: 900;
+  color: red;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  text-align: center;
+  font-size: 20px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.checkout-btn {
+  background-color: #000000;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 40px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-btn:hover {
+  background-color: #292828;
+  transform: translateY(-2px);
+  box-shadow: 10px 10px 50px white;
+}
+
+.checkout-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

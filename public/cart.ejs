@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Rental Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <!-- <link rel="stylesheet" href="swiper-bundle-css.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./css/cart.css">
+</head>
+
+<body>
+  <section>
+    <nav>
+      <div class="navbar">
+        <i class='bx bx-menu'></i>
+        <div class="logo">
+          <img src="./image/zz.png">
+
+        </div>
+        <div class="nav-links">
+          <div class="sidebar-logo">
+            <!-- <span class="logo-name"></span>
+              <i class='bx bx-x' ></i> -->
+          </div>
+          <ul class="links">
+            <li><a href="/dashboard">HOME</a></li>
+            <li>
+              <a href="/dashboard">Degree books</a>
+              <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+              <ul class="htmlCss-sub-menu sub-menu">
+
+                <li class="more">
+                  <span><a href="#">Bsc-IT</a>
+                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                  </span>
+                  <ul class="more-sub-menu sub-menu">
+                    <li><a href="/itsem1">Sem 1</a></li>
+                    <li><a href="/itsem2">Sem 2</a></li>
+                    <li><a href="/itsem3">Sem 3</a></li>
+                    <li><a href="/itsem4">Sem 4</a></li>
+                    <li><a href="/itsem5">Sem 5</a></li>
+                    <li><a href="/itsem6">Sem 6</a></li>
+                  </ul>
+                </li>
+
+
+                <li class="more">
+                  <span><a href="#">BMS</a>
+                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                  </span>
+                  <ul class="more-sub-menu sub-menu">
+                    <li><a href="/bmssem1">Sem 1</a></li>
+                    <li><a href="/bmssem2">Sem 2</a></li>
+                    <li><a href="/bmssem3">Sem 3</a></li>
+                    <li><a href="/bmssem4">Sem 4</a></li>
+                    <li><a href="/bmssem5">Sem 5</a></li>
+                    <li><a href="/bmssem6">Sem 6</a></li>
+                  </ul>
+                </li>
+
+                <!-- 
+                  <li class="more">
+                    <span><a href="#">BA</a>
+                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                  </span>
+                  <ul class="more-sub-menu sub-menu">
+                    <li><a href="#">Sem 1</a></li>
+                    <li><a href="#">Sem 2</a></li>
+                    <li><a href="#">Sem 3</a></li>
+                    <li><a href="#">Sem 4</a></li>
+                    <li><a href="#">Sem 5</a></li>
+                    <li><a href="#">Sem 6</a></li>
+                  </ul>
+                </li>
+
+
+
+                  <li class="more">
+                    <span><a href="#">BAF</a>
+                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                  </span>
+                  <ul class="more-sub-menu sub-menu">
+                    <li><a href="">Sem 1</a></li>
+                    <li><a href="">Sem 2</a></li>
+                    <li><a href="">Sem 3</a></li>
+                    <li><a href="">Sem 4</a></li>
+                    <li><a href="">Sem 5</a></li>
+                    <li><a href="">Sem 6</a></li>
+                  </ul>
+                </li>            
+                 -->
+
+
+                <li class="more">
+                  <span><a href="#">Bcom</a>
+                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                  </span>
+                  <ul class="more-sub-menu sub-menu">
+                    <li><a href="/bcom1">Sem 1</a></li>
+                    <li><a href="/bcom2.">Sem 2</a></li>
+                    <li><a href="/bcom3">Sem 3</a></li>
+                    <li><a href="/bcom4">Sem 4</a></li>
+                    <li><a href="/bcom5">Sem 5</a></li>
+                    <li><a href="/bcom6">Sem 6</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#">Top books</a></li>
+            <!-- <li><a href="#">New Arrivals</a></li> -->
+
+          </ul>
+        </div>
+        <div class="search-box">
+          <i class='bx bx-search'></i>
+          <div class="input-box">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchBooks()">
+            <button type="button" onclick="searchBooks()" class="search-button"
+              aria-placeholder="search">Search</button>
+
+          </div>
+        </div>
+        <div class="cart">
+          <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+
+  <section id="cart-container">
+
+    <table width="100">
+
+      <thead>
+        <tr>
+          <td>Remove</td>
+          <td>books image</td>
+          <td>Name</td>
+          <td>Publisher Name</td>
+          <td>Price</td>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <% cart.forEach(function(item){%>
+          <tr>
+            <td>
+              <form method="post" action="/remove">
+                <input type="hidden" name="id" value="<%=item.id%>" />
+                <input type="submit"  name="Remove"  value="Remove" class="remove-btn">
+              </form>
+
+            </td>
+            <td><img src="./photos/<%= item.image %>" alt="hii"></td>
+            <td>
+              <h5>
+                <%=item.name%>
+              </h5>
+            </td>
+            <td>
+              <h5>
+                <%=item.publisher%>
+              </h5>
+            </td>
+            <td>
+              <h4>
+                ₹<%=item.price %>
+              </h4>
+            </td>
+          </tr>
+          <% }) %>
+      </tbody>
+
+    </table>
+
+
+
+
+  </section>
+
+  <div class="com">
+    <h4>Policy</h4>
+    <h6>1.Customers are eligible for return book  within 7 days from the date of purchase. and the book must be in it's original condition.</h6>
+    <h6>2.Refunds amount will be issued in offline payment method. we will charge a nominal fees.</h6>
+    <h6>3.Reservation time is only for 2 days after 2 days reader is not eligible for borrow book.</h6>
+    <h6>4.The deposit will be refunded upon the return of the book in its original condition within the agreed-upon timeframe.</h6>
+    <h6>5.We will deduction a rental amount of deposits. rental deposits on MRP of books.</h6>
+    <h6>6.If Customer as responsible for damage we will charge a nominal amount.If Book are damage above 50% then Readers shouble Pay on MRP Price of Book.</h6>
+  </div>
+
+  <div class="total" id="cartTotal">
+
+    <h6>Books total: </h6>
+    <div class="gtotal">
+
+      <p>
+        ₹<%= total %>
+      </p>
+    </div>
+    <form action="/check">
+      <input type="submit" class="checkout-btn" value="Checkout">
+    </form>
+    <!-- <button id="checkoutBtn" class="checkout-btn">Checkout</button> -->
+
+  </div>
+
+
+
+
+
+  <script src="./js/cart.js"></script>
+
+</body>
+
+</html>

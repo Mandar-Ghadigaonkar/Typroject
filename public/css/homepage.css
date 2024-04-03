@@ -1,0 +1,792 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+
+/*************************************************************************88 navbar *********************************************8*/
+
+#navbar{
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 0px;
+}
+
+#navbar::before{
+    content: "";
+    background-color: black;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+#navbar .right .header-1 .search-form{
+    margin-bottom: 28px;
+}
+
+#navbar .header-1 .search-form  input{
+   
+font-size: 1.2rem;
+padding: 2px 1.5rem;
+/* margin: 7px; */
+height: 110%;
+width: 79%;
+color: #fff;
+text-transform: none
+
+}
+
+#navbar .header-1 .search-form  input::placeholder{
+    color: rgb(160, 160, 160);
+    font-size: 1.1rem;
+    /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+}
+
+#navbar .header-1 .search-form label{
+    font-size: 0.7rem;
+    color: white;
+    /* padding: 6px; */
+    margin-left: -23px;
+    /* margin-right: -42px; */
+    padding-right: 2.5rem;
+    cursor: pointer
+}
+
+#navbar .header-1 .search-form label:hover{
+    color: green;
+}
+
+#navbar .header-1 .search-form #search-box{
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 26px;
+    
+}
+
+.right{
+    display: flex;
+    /* height: 100px; */
+    float: right;
+    position: absolute;
+    right: 2px;
+}
+#navbar .right .social_icon i{
+    margin: 0 5px;
+    font-size: 18px;
+    color: white;
+}
+
+#navbar .right .social_icon i:hover{
+    color: #089da1;
+    cursor: pointer;
+}
+.logo{
+    display: block;
+    margin: 5px 30px;
+}
+
+.logo img{
+    position: relative;
+    height: 119px;
+    width: 194px;
+    padding: 2px 0px 0px -20px;
+    margin: -7px -27px;
+}
+
+#navbar .left ul{
+    display: flex;
+    padding-bottom: 3px;
+}
+
+
+#navbar .left ul li{
+   
+    list-style: none;
+    font-size: 1.3rem;
+}
+
+#navbar .left ul li a{
+    color: white;
+    display: block;
+    padding: 2px 23px;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+#navbar .left ul li a:hover{
+    color: black;
+   background-color: white;
+}
+
+#navbar .social_icon{
+    margin-left: 24rem;
+}
+
+
+#navbar .social_icon i{
+    margin: 0 5px;
+    font-size: 18px;
+    color: #fff;
+}
+
+#navbar .social_icon i:hover{
+    color: #03f7ff;
+    cursor: pointer;
+}
+
+
+/*****************************************************8888888 search ***********************************************************/
+.search{
+    position: fixed;
+    top: -400%;
+    left: 0;
+    width: 97%;
+    height: 100%;
+    z-index: 100;
+    background-color: hsla(230, 12%, 96%, .6);
+    backdrop-filter: blur(16px);
+    padding: 8rem 1.5rem;
+    transition: top .4s;
+}
+
+.search_form{
+
+    display: flex;
+    align-items: center;
+    column-gap: .5rem;
+    background-color: hsla(230, 12%, 97%);
+    border: 2px solid hsla(230, 50%, 90%);
+    padding-inline: 1rem;
+
+}
+
+.search_icon{
+    font-size: 1.25rem;
+    color:hsla(230, 70%, 16%);
+
+}
+
+.search__input{
+    width: 100%;
+    padding-block: 1rem;
+    background-color: hsla(230, 12%, 97%);
+    color: hsla(230, 16%, 45%);
+    border: none;
+
+}
+.search_close{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 2rem;
+    color:hsla(230, 70%, 16%) ;
+    cursor: pointer;
+}
+
+.show-search{
+    top: 0;
+}
+
+
+
+
+/* ****************************************************************   home ****************************************************/
+
+#home{
+    display: flex;
+    flex-direction: column;
+    padding: 14px 200px;
+    height: 188px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+#home::before{
+    content: "";
+    background: url("../image/retrosupply-jLwVAUtLOAQ-unsplash.jpg") no-repeat center center/cover;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 1600px;
+    margin-top: -191px;
+    z-index: -1;
+    opacity: 10.95;
+
+}
+#home h1{
+   color: #ffffff;
+    text-align: center;
+    font-size: 3.2rem;
+    padding: 48px;
+
+}
+
+#home p{
+    color: #ffffff;
+    text-align: center;
+    font-size: 2.2rem;
+}
+
+/******************************************************************* services **********************************************************/
+#services-cont h1{
+    /* color: #ffffff; */
+    text-align: center;
+    font-size: 3.2rem;
+    padding: 193px;
+    margin: 16px;
+}
+
+#services{
+    margin: -117px 124px;
+    display: flex;
+
+
+}
+
+#services .box{
+
+    border: 4px solid #060606;
+    height: 365px;
+    width: 558px;
+    padding: 8px;
+    margin: -54px 27px;
+    border-radius: 7px;
+    background-color: rgb(231 231 231)
+
+}
+
+#services .box img{
+
+    height: 311px;
+    width: 559px;
+    display: block;
+    margin: auto;
+ 
+ }
+
+
+/* utility */
+
+
+.h-secondary{
+    font-size: 1.8rem;
+    padding: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.btn{
+
+    padding: 6px 20px;
+    border: 2px solid white;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    margin: 17px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 15px white;
+}
+
+.center{
+    text-align: center;
+}
+
+
+
+
+
+/***********************************************************************  Books ******************************************************/
+
+#featured_boks{
+    width: 100%;
+    height: 100vh;
+    padding: 70px 0;
+}
+
+#featured_boks h1{
+    display: flex;
+    margin: 155px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-size: 45px;
+}
+
+#featured_boks .featured_book_box{
+    width: 95%;
+    height: 65vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+#featured_boks .featured_book_box .featured_book_card{
+    width: 250px;
+    height: 420px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #919191;
+    margin: auto 20px;
+}
+
+#featured_boks .featured_book_box .featured_book_card:hover{
+    box-shadow: 0 0 5px #089da1;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_img img{
+    width: 150px;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag h2{
+    margin: 12px;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag .writer{
+    color: #919191;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag .categories{
+    color: #089da1;
+    margin-top: 8px;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag .book_price{
+    margin-top: 8px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag .book_price sub{
+    font-weight: 100;
+    padding: 0 5px;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag .f_btn{
+    padding: 8px 20px;
+    border: 2px solid #089da1;
+    text-decoration: none;
+    color: #000;
+}
+
+#featured_boks .featured_book_box .featured_book_card .featurde_book_tag .f_btn:hover{
+    /* background-color: #089da1; */
+    
+    border: 4px solid rgb(132, 125, 125);
+    color: white;
+}
+
+::-webkit-scrollbar{
+    width: 10px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track{
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb{
+    background: #03f7ff;
+    border-radius: 10px;
+}
+
+
+/***************************************************************   arrivals *************************************************************8*/
+
+#arrivals{
+    width: 100%;
+    height: 100vh;
+    margin-bottom: 35px;
+}
+
+#arrivals h1{
+    font-size: 50px;
+    margin: -42px;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+#arrivals .arrivals_box{
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 25px 0;
+}
+
+#arrivals .arrivals_box .arrivals_card{
+    width: 239px;
+    height: 340px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #919191;
+    margin: auto 20px;
+}
+
+#arrivals .arrivals_box .arrivals_card:hover{
+    box-shadow: 0 0 5px #089da1;
+}
+
+#arrivals .arrivals_box .arrivals_card .arrivals_image{
+    width: 150px;
+    height: 220px;
+    margin: 0 auto;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+#arrivals .arrivals_box .arrivals_card .arrivals_image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.3s;
+}
+
+#arrivals .arrivals_box .arrivals_card:hover .arrivals_image img{
+    transform: scale(1.1);
+}
+
+#arrivals .arrivals_box .arrivals_card .arrivals_tag p{
+    font-family: queen of camelot;
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+#arrivals .arrivals_box .arrivals_card .arrivals_tag .arrivals_icon{
+    color: #089da1;
+    margin-bottom: 18px;
+}
+
+#arrivals .arrivals_box .arrivals_card .arrivals_tag .arrivals_btn{
+    padding: 8px 20px;
+    border: 2px solid #089da1;
+    text-decoration: none;
+    color: #000;
+}
+
+
+/*  ***********************************************8 Recommendations **************************************************/
+
+.Recommendations{
+    width: 100%;
+    height: auto;
+}
+
+.Recommendations h1{
+    text-align: center;
+    font-size: 50px;
+    margin-top: 135px;
+}
+
+.Recommendations .Recommendations_box{
+    width: 95%;
+    height: 50vh;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Recommendations .Recommendations_box .Recommendations_card{
+    width: 400px;
+    height: 320px;
+    box-shadow: 0 0 8px #089da1;
+    padding: 15px;
+    margin: 0 12px;
+}
+
+.Recommendations .Recommendations_box .Recommendations_card h2{
+    text-align: center;
+}
+.Recommendations .Recommendations_box .Recommendations_card i{
+    float: right;
+    font-size: 120px;
+    position: relative;
+    bottom: 20px;
+    color: #eaeaea;
+}
+
+.Recommendations .Recommendations_box .Recommendations_card .card_top img{
+    width: 80px;
+    margin: 0px 120px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+
+.Recommendations .Recommendations_box .Recommendations_card .card p{
+    margin: 10px 0 10px 0;
+    text-align: justify;
+    line-height: 22px;
+}
+
+.Recommendations .Recommendations_box .Recommendations_card .card .Recommendations_icon i{
+    font-size: 16px;
+    float: left;
+    margin-top: 20px;
+    color: #089da1;
+    padding: 0 1px;
+}
+
+
+
+/***************************************8 about  **********************************************/
+
+#about{
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#about .about_image img{
+    width: 800px;
+}
+
+#about .about_tag h1{
+    font-size: 50px;
+    position: relative;
+    bottom: 35px;
+}
+canvas
+#about .about_tag p{
+    line-height: 22px;
+    width: 650px;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+#about .about_tag .about_btn{
+    padding: 10px 20px;
+    background: #089da1;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    top: 50px;
+}
+
+
+/****************************************************************** Footer *****************************************************************/
+
+footer{
+    width: 100%;
+    background: #000000;
+}
+
+footer .footer_main{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+footer .footer_main .tag{
+    margin: 10px 0;
+}
+
+footer .footer_main .tag img{
+    height: 84px;
+    width: 126px;
+    margin: 1px 51px;
+}
+
+footer .footer_main .tag p{
+    width: 250px;
+    line-height: 22px;
+    color: white;
+    text-align: justify;
+}
+
+footer .footer_main .tag h1{
+    font-size: 25px;
+    margin: 25px 0;
+    color: #ffffff;
+}
+
+footer .footer_main .tag a{
+    display: block;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+footer .footer_main .tag i{
+    margin-right: 10px;
+    color: white;
+}
+
+footer .footer_main .tag .social_link i{
+    margin: 0 5px;
+}
+
+/* footer .footer_main .tag .search_bar{
+    width: 230px;
+    height: 30px;
+    background: rgb(255, 255, 255);
+    border-radius: 25px;
+} */
+
+footer .footer_main .tag .search_bar input{
+    width: 200px;
+    padding: 2px 0;
+    position: relative;
+    top: 17%;
+    left: 6%;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    background: none;
+}
+
+/* footer .footer_main .tag .search_bar button{
+    padding: 7px 15px;
+    background: #089da1;
+    border: none;
+    margin-top: 15px;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+} */
+
+footer .end{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    color: #ffffff;
+}
+
+footer .end span{
+    color: #ffffff;
+    margin-left: 10px;
+}
+
+
+/* 
+mdeia fire */
+/* Add this media query at the end of your CSS */
+
+@media screen and (max-width: 768px) {
+    /* Navbar */
+    #navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    #navbar .right {
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+
+    #navbar .right .social_icon {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #navbar .left ul {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+    }
+
+    #navbar .left ul li {
+        margin: 5px 0;
+    }
+
+    #navbar .left ul li a {
+        padding: 10px 20px;
+        margin: 5px 0;
+    }
+
+    /* Common styles for headings */
+    h1 {
+        font-size: 1.5rem;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Utility */
+    .h-secondary {
+        font-size: 1.2rem;
+        padding: 10px;
+    }
+
+    .btn {
+        padding: 5px 15px;
+        font-size: 1.1rem;
+        margin: 10px;
+    }
+
+    /* Books */
+    #featured_boks h1,
+    #arrivals h1,
+    .Recommendations h1 {
+        font-size: 1.5rem;
+        margin: 20px;
+    }
+
+    #arrivals .arrivals_box {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    #arrivals .arrivals_box .arrivals_card,
+    .Recommendations .Recommendations_box .Recommendations_card {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    /* About */
+    #about .about_image img {
+        width: 90%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    #about .about_tag h1 {
+        font-size: 1.5rem;
+    }
+
+    #about .about_tag p {
+        width: 90%;
+    }
+
+    #about .about_tag .about_btn {
+        margin-top: 20px;
+    }
+
+    /* Footer */
+    footer .footer_main .tag h1 {
+        font-size: 1.2rem;
+        margin: 15px 0;
+    }
+
+    footer .footer_main .tag a {
+        margin: 5px 0;
+    }
+}

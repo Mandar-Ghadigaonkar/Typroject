@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="./css/checkout.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Books details</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Book name</th>
+                    <th>Price</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <% cart.forEach(function(item) { %>
+                    <tr>
+                        <td>
+                            <%= item.name %>
+                        </td>
+                        <td>₹<%= item.price %>
+                        </td>
+
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+
+        <p>Total price: ₹<%= total %>
+        </p>
+
+
+        <form id="checkoutForm" action="/checkout" method="post">
+            <h1>Readers Details</h1>
+
+            <% cart.forEach(function(item) { %>
+                <input type="hidden" name="items[]" value="<%= item.name %>">
+                <% }); %>
+                    <input type="hidden" id="total" name="total" value="₹<%= total %>">
+
+                    <div class="input-group">
+                        <div>
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div>
+                            <label for="class">Class:</label>
+                            <input type="text" id="clas" name="clas" required>
+                        </div>
+
+                        <div>
+                            <label for="contact">Contact:</label>
+                            <input type="text" id="contact" name="contact" pattern="[0-9]{10}" maxlength="10" required
+                                title="Please enter a 10-digit number">
+                        </div>
+
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div>
+                            <label for="rentalDays">Rental Days:</label>
+                            <input type="number" id="rentalDays" name="rentalDays" min="1" max="90" required>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="validateAndCheckout()">Checkout</button>
+        </form>
+        <div id="errorMessage"></div>
+    </div>
+
+    <script >
+        function validateAndCheckout() {
+
+const name = document.getElementById("name").value;
+const clas = document.getElementById("clas").value;
+const contact = document.getElementById("contact").value;
+const email = document.getElementById("email").value;
+const rentalDays = document.getElementById("rentalDays").value;
+
+
+if (!name || !clas || !validateContact(contact) || !email || !rentalDays) {
+    const errorMessageDiv = document.getElementById('errorMessage');
+    errorMessageDiv.textContent = 'Please fill in all fields correctly.';
+    return;
+}
+
+
+checkout();
+}
+const rentalDaysInput = document.getElementById("rentalDays");
+
+
+rentalDaysInput.addEventListener("keydown", function (event) {
+
+const keyCode = event.keyCode || event.which;
+
+
+if (
+    keyCode === 8 ||
+    keyCode === 46 ||
+    (keyCode >= 37 && keyCode <= 40) ||
+    keyCode === 9
+) {
+    return;
+}
+
+
+if (keyCode < 48 || keyCode > 57) {
+    event.preventDefault();
+}
+
+
+if (this.value.length >= 2) {
+    event.preventDefault();
+}
+});
+
+const contactInput = document.getElementById("contact");
+
+
+contactInput.addEventListener("keydown", function (event) {
+
+const keyCode = event.keyCode || event.which;
+
+
+if (
+    keyCode === 8 ||
+    keyCode === 46 ||
+    (keyCode >= 37 && keyCode <= 40) ||
+    keyCode === 9
+) {
+    return;
+}
+
+
+if (keyCode < 48 || keyCode > 57) {
+    event.preventDefault();
+}
+});
+function validateContact(contact) {
+
+const contactPattern = /^\d{10}$/;
+
+
+return contactPattern.test(contact);
+}
+
+function checkout() {
+
+const name = document.getElementById("name").value;
+const clas = document.getElementById("clas").value;
+const contact = document.getElementById("contact").value;
+const email = document.getElementById("email").value;
+const rentalDays = document.getElementById("rentalDays").value;
+const items = Array.from(document.querySelectorAll("input[name='items[]']")).map(item => item.value);
+let total = document.getElementById("total").value;
+
+
+total = parseFloat(total.replace('₹', ''));
+
+
+const userData = {
+    name: name,
+    clas: clas,
+    contact: contact,
+    email: email,
+    rentalDays: rentalDays,
+    items: items,
+    total: total
+};
+
+fetch('http://localhost:8002/checkout', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (!data || !data.insertId) {
+            throw new Error('No insert ID returned from server');
+        }
+
+        window.location.href = '/checkoutconfirm/' + data.insertId;
+    })
+    .catch(error => {
+
+        const errorMessageDiv = document.getElementById('errorMessage');
+        errorMessageDiv.textContent = error.message;
+        console.error('Checkout error:', error);
+
+    });
+}
+    </script>
+
+</body>
+
+</html>

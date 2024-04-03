@@ -1,0 +1,60 @@
+body {
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+        line-height: 1.6;
+    margin: 0px;
+}
+
+header {
+    text-align: center;
+    /* height: 130px; */
+    width: 1600px;
+    margin-left: -33px;
+    /* margin-top: -1px; */
+    margin-bottom: 22px;
+    border: 2px;
+    padding: 4px;
+    background: linear-gradient(to top, aqua, white);
+    text-emphasis-color: white;
+}
+
+.logo {
+    display: block;
+    margin: 5px 30px;
+}
+
+.logo img {
+    position: relative;
+    height: 119px;
+    width: 212px;
+    margin: -1px -25px;
+}
+
+header .q1 {
+    color: antiquewhite;
+    font-size: 40px;
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+
+}
+
+header .q2 {
+    color: antiquewhite;
+    font-size: 30px;
+    margin: 6px;
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+
+}
+
+section {
+    max-width: 800px;
+    margin: auto;
+}
+
+h2 {
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+    color: #333;
+}
+
+p {
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+    margin-bottom: 20px;
+}

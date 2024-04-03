@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins',sans-serif;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+
+    background-color: black;
+    color: white;
+}
+/* 
+#header{
+    width:100%;
+    height: 100vh;
+    background-image: url(login\ bg.jpg); 
+    background-size: cover;
+    background-position: center;
+} */
+
+.container{
+     padding: auto;
+    margin: 0px 2px;
+    
+}
+
+.container::before{
+    content: "";
+    background: url(pexels-rdne-stock-project-8499562.jpg) no-repeat center/cover;
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+    z-index: -1;
+
+}
+   
+nav{
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+    
+   
+}
+
+.logo{
+    
+    width: 200px;
+    margin-left: 35px;
+
+}
+nav ul{
+    margin-right: 25px;
+    
+}
+
+nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 19px 20px;
+    
+    
+}
+
+nav ul li a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    position: relative;
+    color: #ff004f;
+    font-weight: 700;
+}
+
+nav ul li a::after{
+    content:'';
+    width: 0;
+    height:5px ;
+    background: black;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    transition: 0.7s;
+}
+
+nav ul li a:hover::after{
+    width: 100%;
+
+}
+
+.qutos{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.qutos p{
+    justify-content: center;
+    align-items: center;
+    margin-left: 16%;
+    margin-top: 14%;
+    padding: 90px 10%;
+    font-size: 22px;
+}
+
+.imgs{
+    flex-basis: 50%;
+    margin-bottom: 20px;
+}
+
+.imgs img{
+    display: block;
+    width: 90%;
+    margin: auto;
+}
+

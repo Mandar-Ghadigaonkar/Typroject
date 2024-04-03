@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <!-- <link rel="stylesheet" href="./css/resetpassword.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+        }
+
+
+        body {
+            color: #fff;
+            display: flex;
+            height: 100vh;
+            background: url(image/hanna-zhyhar-JLVBJsiaQE0-unsplash.jpg);
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            opacity: 1.4;
+        }
+
+
+
+
+
+        .home {
+            margin-bottom: 42%;
+            margin-right: 28%;
+            border-bottom: 4px solid rgb(255, 255, 255);
+        }
+
+        i {
+            color: aqua;
+            letter-spacing: 1px;
+            font-weight: 800;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+
+        .container {
+            width: 400px;
+            margin-right: 36%;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+        }
+
+        .container h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 240px;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(175deg, #000000, #ffffff);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .input-field {
+            position: relative;
+            border-bottom: 2px solid #ccc;
+            margin: 15px 0;
+        }
+
+        .input-field label {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            pointer-events: none;
+            transition: 0.15s ease;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .input-field input {
+            width: 100%;
+            height: 40px;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .input-field input:focus~label,
+        .input-field input:valid~label {
+            font-size: 1rem;
+            top: 10px;
+            transform: translateY(-120%);
+        }
+
+
+        .btn {
+            width: 30%;
+            background: #fff;
+            color: #000;
+            font-weight: 600;
+            margin-left: 60%;
+            margin-bottom: -9%;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            border-radius: 3px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: 0.3s ease;
+            flex: 1;
+            margin-top: 10px;
+        }
+
+        button:hover,
+        .btn:hover {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        #sendbtn {
+            width: 30%;
+            background: #fff;
+            color: #000;
+            font-weight: 600;
+            margin-right: 50%;
+            border: none;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: 0.3s ease;
+            flex: 1;
+            margin-top: 10px;
+            margin-top: -40%;
+            width: 30%;
+        }
+
+        #errorMessage {
+            font-size: 18px;
+            text-align: center;
+            font-weight: 800;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="home">
+        <i class="fa-solid fa-house"> Home</i>
+    </div>
+    <div class="container">
+        <h2>Forgot Password</h2>
+        <% if(errorMessage) { %>
+            <p style="color: red;">
+                <%= errorMessage %>
+            </p>
+            <% } %>
+                <form id="resetPasswordForm" onsubmit="forgot()" action="/forgott" method="post">
+
+                    <div class="input-field">
+                        <input type="text" id="uname" name="uname" required>
+                        <label>Enter Email</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" id="otp" required disabled>
+                        <label>Enter OTP</label>
+                    </div>
+
+
+                    <input type="submit" value="Forget" class="btn" />
+
+                </form>
+                <!-- <button onclick="forgot()">Forgot</button> -->
+                <button onclick="sendOTP()" id="sendbtn">Send</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script  >
+        let  sendbtn=document.getElementById('sendbtn')
+        let otpInput = document.getElementById("otp")
+        let unameInput = document.getElementById("uname")
+        const sendOTP = () => {
+          // e.preventDefault();
+          // alert("click")
+          let otp = document.getElementById("otp").value;
+          let uname = document.getElementById("uname").value;
+        
+          const userData = {
+            uname: uname,
+          }; 
+        
+          if (uname.length!=0) {
+            
+          
+        
+          fetch("http://localhost:8002/sendotp", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              sendbtn.disabled=true
+              otpInput.disabled=false
+              // unameInput.disabled=true
+              return response.json();
+            })
+            .catch((error) => {
+              console.error("Forgot error:", error);
+              // err.innerHTML="password not tmatch";
+              // Optionally, you can display an error message to the user
+            });
+        
+          }
+        
+        //   alert(otp + "send btn");
+        };
+        
+        
+        const forgot = (e) => {
+          // e.preventDefault(); // Prevent the default form submission
+          let uname = document.getElementById("uname").value;
+          let otp = document.getElementById("otp").value;
+        
+          const userData = {
+              uname: uname,
+              otp: otp,
+          };
+        
+          fetch("http://localhost:8002/forgott", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userData),
+          })
+          .then((response) => {
+              if (response.redirected) {
+                  // If the response is a redirect, manually redirect the client
+                  // window.location.href = response.url; // Redirect to the provided URL
+              } else {
+                  // Handle JSON response or other scenarios
+                  return response.json();
+              }
+          })
+          .then((data) => {
+              // Handle JSON data if needed
+          })
+          .catch((error) => {
+              console.error("Forgot error:", error);
+              // Handle error scenarios
+          });
+        };
+        </script>
+</body>
+
+</html>

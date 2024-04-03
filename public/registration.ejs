@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    color: #fff;
+    display: flex;
+    height: 100vh;
+    background: url(image/hanna-zhyhar-JLVBJsiaQE0-unsplash.jpg);
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-size: cover;
+background-position: center;
+z-index: -1;
+font-family:Georgia, 'Times New Roman', Times, serif;
+opacity: 1.4;
+}
+.home{
+    margin-bottom: 42%;
+    margin-right: 18%;
+    border-bottom: 4px solid rgb(255, 255, 255);
+}
+i{
+    color: aqua;
+    letter-spacing: 1px;
+    font-weight: 800;
+    font-family:Georgia, 'Times New Roman', Times, serif; 
+    font-size: 20px;
+}
+
+.container {
+    max-width: 700px;
+    width: 100%;
+    margin-right: 28%;
+    padding: 25px 30px;
+    border-radius: 25px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #000000;
+}
+
+.container .title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+    padding: 0 0 20px 0;
+    color: white;
+    font-family:Georgia, 'Times New Roman', Times, serif;   
+}
+
+.container .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(175deg, #000000, #ffffff);
+}
+
+.container form .stud-details {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form .stud-details .input-box {
+    margin-bottom: 15px;
+    width: 48%;
+    color: white;
+}
+
+.stud-details .input-box .info {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.stud-details .input-box input {
+    height: 45px;
+    width: 100%;
+    color: black;
+    font-weight: 500;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.input-box input::placeholder {
+    color: #000000;
+    font-weight: 400;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.stud-details .input-box input:focus,
+.stud-details .input-box input:valid {
+    border-color: #9b59b6;
+}
+
+form .gender .gender-title {
+    /* display: flex; */
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    /* border-bottom: 2px solid; */
+    /* color: black; */
+}
+
+
+form .gender .category {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 1rem;
+    color: white;
+    /* display: flex;
+width: 40%;
+margin: 14px 0;
+justify-content: space-between; */
+}
+
+form .button {
+    text-align: center;
+}
+
+form .button input {
+    padding: 10px 0;
+    margin-top: 10px;
+    height: 100%;
+    width: 50%;
+    outline: none;
+    color: #020202;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #fff;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+form .button input:hover {
+    background: black;
+    color: white;
+}
+
+form .input-box b {
+    color: red;
+}
+
+form .input-box i {
+    color: green;
+    margin-bottom: 1px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    color: #ff0000;
+    margin-left: 105px;
+}
+
+p a {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: #ffffff;
+}
+#errorMessage{
+      font-size: 18px;
+      text-align: center;
+      font-weight: 800;
+      
+    }
+</style>
+</head>
+
+<body>
+    <div class="home">
+        <i class="fa-solid fa-house"> Home</i>
+    </div>
+    
+    <div class="container">
+        <div class="title">Registration Form</div>
+          <!-- Add a section for displaying error messages -->
+    <div id="errorMessage" style="color: red;">
+        <!-- Display error message here -->
+        <%= errorMessage %>
+    </div>
+
+
+        <form id="registrationForm" action="/sign" method="POST">
+            <div class="stud-details">
+                <div class="input-box">
+                    <span class="info">Full Name:</span>
+                    <input type="text" id="name" name="name" placeholder="Enter Your Full Name" required>
+                </div>
+                <div class="input-box">
+                    <span class="info">Class:</span>
+                    <input type="text" id="clas" name="clas" placeholder="Enter Your class" required>
+                </div>
+                <div class="input-box">
+                    <span class="info">Contact No:</span>
+                    <input type="tel" id="contact" name="contact" pattern="[0-9]{10}"
+                        placeholder="Enter Your Contact No" required>
+                </div>
+                <div class="input-box">
+                    <span class="info">Email:</span>
+                    <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+                </div>
+                <div class="input-box">
+                    <span class="info">Password:</span>
+                    <input type="password" id="password" name="password" minlength="1" maxlength="10"
+                        placeholder="Enter Your Password" required>
+                </div>
+                <div class="input-box">
+                    <span class="info">Confirm Password:</span>
+                    <input type="password" id="confirmpassword" name="confirmpassword" minlength="1" maxlength="10"
+                        placeholder="Confirm your Password" required>
+                </div>
+                <div class="gender">
+                    <span class="gender-title">Gender</span>
+                    <div class="category">
+                        <input type="radio" id="gender" name="gender" value="Male" required>Male
+                        <input type="radio" id="gender" name="gender" value="Female" required>Female
+                        <input type="radio" id="gender" name="gender" value="Other" required>Other
+                    </div>
+                </div>
+            </div>
+            <p>
+                By registering, you agree to our <a href="/policy" target="_blank">privacy policy</a>.
+            </p>
+            <div class="button">
+                <input type="submit" value="Register"></input>
+            </div>
+        </form>
+    </div>
+
+
+<!----------------------------------------------------------------------------- JavaScript---------------------------------------------------------------- -->
+
+   <script src="./js/regi.js"></script>
+</body>
+
+</html>
