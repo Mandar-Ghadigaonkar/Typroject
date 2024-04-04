@@ -28,23 +28,39 @@ z-index: -1;
 font-family:Georgia, 'Times New Roman', Times, serif;
 opacity: 1.4;
 }
-.home{
-    margin-bottom: 42%;
-    margin-right: 18%;
-    border-bottom: 4px solid rgb(255, 255, 255);
+.go {
+    text-align: right; 
+    margin-top: -40rem;
+    margin-left: -90%;
+   
 }
-i{
-    color: aqua;
-    letter-spacing: 1px;
-    font-weight: 800;
-    font-family:Georgia, 'Times New Roman', Times, serif; 
-    font-size: 20px;
+
+.go a {
+    text-decoration: none; 
+}
+
+.go input[type="submit"] {
+    background-color: #00ffe5; 
+    color: rgb(0, 0, 0); 
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer; 
+    box-shadow: 10px 6px 30px black;
+    transition: background-color 0.3s; 
+}
+
+.go input[type="submit"]:hover {
+    background-color: #7fdbd5; 
 }
 
 .container {
     max-width: 700px;
+    position: fixed;
     width: 100%;
-    margin-right: 28%;
+    /* margin-right: -28%; */
     padding: 25px 30px;
     border-radius: 25px;
     background: transparent;
@@ -201,9 +217,9 @@ p a {
 </head>
 
 <body>
-    <div class="home">
-        <i class="fa-solid fa-house"> Home</i>
-    </div>
+    <div class="go">
+        <a href="/"><input type="submit" class="btn" value="Go back"></a>
+      </div>
     
     <div class="container">
         <div class="title">Registration Form</div>

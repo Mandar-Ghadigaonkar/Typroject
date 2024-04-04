@@ -36,24 +36,40 @@
 
 
 
-        .home {
-            margin-bottom: 42%;
-            margin-right: 28%;
-            border-bottom: 4px solid rgb(255, 255, 255);
-        }
+        .go {
+    text-align: right; 
+    margin-top: -40rem;
+    margin-left: -97%;
+   
+}
 
-        i {
-            color: aqua;
-            letter-spacing: 1px;
-            font-weight: 800;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 20px;
-        }
+.go a {
+    text-decoration: none; 
+}
+
+.go input[type="submit"] {
+    background-color: #00ffe5; 
+    color: rgb(0, 0, 0); 
+    padding: 13px 80px 10px 21px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer; 
+    box-shadow: 10px 6px 30px black;
+    transition: background-color 0.3s; 
+}
+
+.go input[type="submit"]:hover {
+    background-color: #7fdbd5; 
+}
 
         .container {
             width: 400px;
-            margin-right: 36%;
+            position: fixed;
+            /* margin-right: 36%; */
             border-radius: 8px;
+            background: transparent;
             padding: 30px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.5);
@@ -177,20 +193,18 @@
 </head>
 
 <body>
-    <div class="home">
-        <i class="fa-solid fa-house"> Home</i>
-    </div>
+    <div class="go">
+        <a href="/sign"><input type="submit" class="btn" value="Go back"></a>
+      </div>
     <div class="container">
         <h2>Forgot Password</h2>
-        <% if(errorMessage) { %>
-            <p style="color: red;">
-                <%= errorMessage %>
-            </p>
-            <% } %>
+        <div id="errorMessage"><%= errorMessage %></div>
+
+       
                 <form id="resetPasswordForm" onsubmit="forgot()" action="/forgott" method="post">
 
                     <div class="input-field">
-                        <input type="text" id="uname" name="uname" required>
+                        <input type="email" id="uname" name="uname" required>
                         <label>Enter Email</label>
                     </div>
                     <div class="input-field">

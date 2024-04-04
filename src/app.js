@@ -84,45 +84,46 @@ app.get("/resetpassword", (req, res) => {
   res.render("resetpassword");
 });
 
-app.post("/restpass",(req,res)=>{
+app.post("/restpass", (req, res) => {
   const { newPassword, confirmPassword, uname } = req.body;
-  // UPDATE `students` SET `password`='[value-5]' WHERE email="s@gmail.com";
   console.log(newPassword);
-  console.log(`Updating password for user: ${uname}`);
+  console.log("update for ",uname);
 
-
-  connection.query(
-    `UPDATE students SET password='${newPassword}', confirmpassword='${confirmPassword}' WHERE email='${uname}';`,
-    (error, results, fields) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log( results.affectedRows);
-        // res.json(results);cls
-        // if (results[0] === undefined) {
-        //   console.log("user not found");
-        // } else {
-        //   console.log(results);
-
-        //   // const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
-        //   const otp = "1";
-
-        //   otps[data.uname] = otp;
-        //   // Send OTP email
-        //   sendOTPEmail(data.uname, otp);
-
-        //   res.status(200).send("OTP sent successfully.");
-        // }
-if (results.affectedRows!==0) {
-  // res.render("dashboard")
-  res.redirect('/sign');
-  // res.status(400).send('success OTP'); 
-}
-
-      }
+  // Hash both the new password and confirm password
+  bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error('Error hashing password: ', err);
+      return res.status(500).send("Error updating password");
     }
-  );
-})
+
+    bcrypt.hash(confirmPassword, 10, (err, hashedConfirmPassword) => {
+      if (err) {
+        console.error('Error hashing confirm password: ', err);
+        return res.status(500).send("Error updating password");
+      }
+
+      // Update the hashed passwords in the database
+      connection.query(
+        `UPDATE reders SET password='${hashedPassword}', confirmpassword='${hashedConfirmPassword}' WHERE email='${uname}';`,
+        (error, results, fields) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).send("Error updating password");
+          } else {
+            console.log(results.affectedRows);
+            if (results.affectedRows !== 0) {
+               res.redirect('/sign');
+            }
+          }
+        }
+      );
+    });
+  });
+});
+
+
+
+
 
 // kamu
 
@@ -139,10 +140,22 @@ app.post("/forgott", (req, res) => {
 
     delete otps[uname]; 
   } else {
-    // res.status(400).send('Invalid OTP'); 
-    res.render('forgot2',{ errorMessage: "Invalid OTP" })
+    res.status(400).send('Invalid OTP'); 
+    res.render('forgot2')
   }
 });
+
+
+// app.post("/forgott", (req, res) => {
+//   const { uname, otp } = req.body;
+//   if (otps[uname] === otp) {
+//     delete otps[uname];
+//     res.render('resetpassword', { uname: uname });
+//   } else {
+//     res.render('forgot2', { errorMessage: "Invalid OTP" });
+//   }
+// });
+
 
 // me
 
@@ -172,7 +185,7 @@ app.post("/sendotp", (req, res) => {
   const data = req.body;
   console.log(data + "sendOTP api");
   connection.query(
-    `SELECT * FROM students WHERE email="${data.uname}"; `,
+    `SELECT * FROM reders WHERE email="${data.uname}"; `,
     (error, results, fields) => {
       if (error) {
         console.log(error);
@@ -182,12 +195,12 @@ app.post("/sendotp", (req, res) => {
         if (results[0] === undefined) {
           console.log("user not found");
         // Render the forgot2 template with error message
-        res.render('forgot2', { errorMessage: "Email not found" });
+        res.render('forgot2', { errorMessage: "User not found." });
         } else { 
           console.log(results);
 
-          // const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
-          const otp = "1";
+          const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
+          // const otp = "1";
 
           otps[data.uname] = otp;
           // Send OTP email
@@ -356,7 +369,7 @@ app.post('/sign', (req, res) => {
 
 app.get('/sign', (req, res) => {
   const errorMessage = req.query.error || "";
-  res.render('sigin', { errorMessage }); 
+  res.render('sigin', { errorMessage: errorMessage }); 
 });
 
 
@@ -968,7 +981,7 @@ app.get("/adminlog", (req, res) => {
 ///////////////////////// IN ADMIN PAGE SHOW REGISTER USER INFO //////////////////////////
 
 app.get("/admin/users", (req, res) => {
-  connection.query("SELECT * FROM students", (error, results, fields) => {
+  connection.query("SELECT * FROM reders", (error, results, fields) => {
     if (error) {
       console.log(error);
       res.status(500).send("Error fetching user data");

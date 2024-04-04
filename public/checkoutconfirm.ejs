@@ -21,6 +21,7 @@
             font-size: 14px;
             /* background: linear-gradient(to top,aqua, white); */
             line-height: 1.4;
+            background-color: #ccc;
             font-weight: 600;
             color: #333;
             height: 0%;
@@ -106,7 +107,8 @@
 
 
         ul {
-            list-style-type: none;
+            list-style-type: decimal;
+            margin-left: 18px;
             text-align: left;
         }
 
@@ -114,7 +116,7 @@
         li {
             margin-bottom: 3px;
             text-align: left;
-
+            
         }
 
 
@@ -135,6 +137,35 @@
             font-weight: 800;
             color: red;
         }
+
+        .go {
+    text-align: left; 
+    margin-top: -31rem;
+    margin-left: 20px;
+   
+}
+
+.go a {
+    text-decoration: none; 
+}
+
+.go input[type="submit"] {
+    background-color: #00ffe5; 
+    color: rgb(0, 0, 0); 
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer; 
+    box-shadow: 10px 6px 30px black;
+    transition: background-color 0.3s; 
+}
+
+.go input[type="submit"]:hover {
+    background-color: #7fdbd5; 
+}
+
     </style>
 
 
@@ -142,14 +173,14 @@
 
 <body>
     <div class="container">
-        <h1>Order Invoice</h1>
-        <h3>Thank you for your order, <span data-text="<%=name%>" class="name">
-                <%= name %>
-            </span>!</h3>
-        <p>Order ID: <span>
+        <h1>Reservation Invoice </h1>
+        <h3><span data-text="<%=name%>" class="name">
+            " <%= name %>"
+        </span>Your book has been reserved, you can visit store and collect it.</h3>
+        <p>Your Reservation Id : <span>
                 <%= id %>
             </span></p>
-        <p>Class: <span>
+        <p>Your Class: <span>
                 <%= clas %>
             </span></p>
         <p>Contact: <span>
@@ -161,10 +192,10 @@
         <p>Rental Days: <span>
                 <%= rentalDays %>
             </span></p>
-        <p>Total: <span>
+        <p>Total Price: <span>
                 <%= total %>
             </span></p>
-        <h2>Books Names:</h2>
+        <h2>Your Reserved Books:</h2>
         <ul>
             <% items.forEach(function(item) { %>
                 <li> <span>
@@ -172,6 +203,9 @@
                     </span></li>
                 <% }); %>
         </ul>
+    </div>
+    <div class="go">
+       <a href="/dashboard"><input type="submit" class="btn" value="Go back"></a>
     </div>
 </body>
 

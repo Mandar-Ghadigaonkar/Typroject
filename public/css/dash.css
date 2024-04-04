@@ -218,7 +218,7 @@ nav .navbar .links li:hover .js-sub-menu{
   width: 100%;
   line-height: 40px;
   text-align: center;
-  margin-left: 20px;
+  margin-left: 5px;
   font-size: 19px;
   color: #000000;
   font-weight: 600;
@@ -312,6 +312,7 @@ marquee {
   justify-content: center;
   font-family:Georgia, 'Times New Roman', Times, serif; 
   /* margin-bottom: 30px; */
+  text-shadow: 5px -1px 0px rgb(5, 255, 238);
   font-size: 45px;
 }
 

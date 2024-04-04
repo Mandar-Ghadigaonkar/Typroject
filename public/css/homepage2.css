@@ -315,6 +315,7 @@ html::-webkit-scrollbar-thumb{
     font-size: 1.7rem;
     cursor: pointer;
     font-weight: 800;
+    margin-right: 2rem;
     
 }
 
