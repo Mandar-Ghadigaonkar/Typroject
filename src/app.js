@@ -383,44 +383,51 @@ app.post('/home', (req, res) => {
   const { email, password } = req.body;
   const sql = 'SELECT * FROM reders WHERE email = ?';
   connection.query(sql, [email], (err, results) => {
+    if (err) {
+      console.error('Error retrieving user: ', err);
+      return res.send('Error logging in');
+    }
+    if (results.length === 0) {
+      return res.redirect('/sign?error=Email not registered');
+    }
+
+    const user = results[0];
+    // Compare the hashed password
+    bcrypt.compare(password, user.password, (err, result) => {
       if (err) {
-          console.error('Error retrieving user: ', err);
-          res.send('Error logging in');
-      } else {
-          if (results.length > 0) {
-              const user = results[0];
-              // Compare the hashed password
-              bcrypt.compare(password, user.password, (err, result) => {
-                  if (err) {
-                      console.error('Error comparing passwords: ', err);
-                      return res.send('Error logging in');
-                  }
-                  if (result) {
-                      const accessToken = jwt.sign({ email: user.email }, "mynameismandariamdoingprojectononlinebookrentalsystem", { expiresIn: '2h' });
-                      console.log("Generated token:", accessToken);
-                      res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 }); // Set JWT in a cookie (optional)
-                      connection.query("SELECT * FROM featured ", (error, result) => {
-                          if (error) {
-                              console.log(error);
-                              res.status(401).send("Internal Server Error");
-                          } else {
-                              console.log(result);
-                              res.render('dashboard', { result: result });
-                          }
-                      });
-                  } else {
-                      // Password doesn't match, redirect to sign-in page with error
-                      res.redirect('/sign?error=Incorrect email or password');
-                  }
-              });
-          } else {
-              // No user found with the given email, redirect to sign-in page with error
-              res.redirect('/sign?error=Email not registered');
-          }
+        console.error('Error comparing passwords: ', err);
+        return res.send('Error logging in');
       }
+      if (!result) {
+        // Password doesn't match, redirect to sign-in page with error
+        return res.redirect('/sign?error=Incorrect email or password');
+      }
+
+      // Password matches, generate JWT token
+      const accessToken = jwt.sign(
+        { email: user.email },
+        "mynameismandariamdoingprojectononlinebookrentalsystem",
+        { expiresIn: '2h' }
+      );
+      console.log("Generated token:", accessToken);
+
+      // Set JWT in a cookie (optional)
+      res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 });
+
+      // Store user information in session
+      req.session.user = {
+        email: user.email,
+        name: user.name,
+        contact:user.contact,
+        clas:user.clas,
+        // Add other user information you want to store
+      };
+
+      // Redirect to dashboard
+      res.redirect('/dashboard');
+    });
   });
 });
-
 
 // Verify JWT token
 function authenticateToken(req, res, next) {
@@ -451,14 +458,22 @@ function authenticateToken(req, res, next) {
 ///////////////////////////////////////////////////////////////// DASHBOARD GET HERE /////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/dashboard", (req, res) => {
+  const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
+
   connection.query("SELECT * FROM featured ", (error, result) => {
     if (error) {
-      console.log(error);
-      res.status(401).send("Internal Server Error");
-    } else {
-      console.log(result);
-      res.render("dashboard", { result: result });
+      console.error(error);
+      return res.status(500).send("Internal Server Error");
     }
+
+    console.log(result);
+    // Render the dashboard page with the result and user information
+    res.render("dashboard", { result: result, user: user });
   });
 });
 

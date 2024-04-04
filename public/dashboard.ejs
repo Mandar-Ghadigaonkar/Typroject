@@ -92,6 +92,7 @@
           
                     </ul>
                   </div>
+                  
                   <div class="search-box">
                     <i class='bx bx-search'></i>
                     <div class="input-box">
@@ -107,6 +108,54 @@
                     <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
                 </div>
             </div>
+            <% if (user) { %>
+                <div class="profile-dropdown">
+                    <div onclick="toggle()" class="profile-dropdown-btn">
+                      <div class="profile-img">
+                        <i class="fa-solid fa-circle"></i>
+                      </div>
+            
+                      <span>
+                        <%= user.name %>
+                        <i class="fa-solid fa-angle-down"></i>
+                      </span>
+                    </div>
+            
+                    <ul class="profile-dropdown-list">
+            
+                      <li class="profile-dropdown-list-item">
+                        <a href="#">
+                          <i class="fa-regular fa-envelope"></i>
+                          <%= user.email %>
+                        </a>
+                      </li>
+            
+                      <li class="profile-dropdown-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-phone"></i>
+                          <%=user.contact%>
+                        </a>
+                      </li>
+            
+                      <li class="profile-dropdown-list-item">
+                        <a href="#">
+                            <i class="fa-solid fa-book"></i>
+                            <%= user.clas %>
+                        </a>
+                      </li>
+            
+                      
+                      <hr />
+            
+                      <li class="profile-dropdown-list-item">
+                        <a href="/sign">
+                          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                          Log out
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <% } %>
         </nav>
 
         <div class="main">

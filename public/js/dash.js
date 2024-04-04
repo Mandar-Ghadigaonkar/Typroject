@@ -1,3 +1,18 @@
+let profileDropdownList = document.querySelector(".profile-dropdown-list");
+    let btn = document.querySelector(".profile-dropdown-btn");
+    
+    let classList = profileDropdownList.classList;
+    
+    const toggle = () => classList.toggle("active");
+    
+    window.addEventListener("click", function (e) {
+      if (!btn.contains(e.target)) classList.remove("active");
+    });
+
+
+
+
+
 let navbar = document.querySelector(".navbar");
 let searchBox = document.querySelector(".search-box .bx-search");
 // let searchBoxCancel = document.querySelector(".search-box .bx-x");
@@ -109,3 +124,4 @@ function displaySearchResults(results) {
         searchResultsContainer.textContent = "No results found.";
     }
 }
+
