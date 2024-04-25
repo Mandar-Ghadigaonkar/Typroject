@@ -19,119 +19,142 @@
   <section>
     <nav>
       <div class="navbar">
-        <i class='bx bx-menu'></i>
-        <div class="logo">
-          <img src="./image/zz.pngg">
+          <!-- <i class='bx bx-menu'></i> -->
+          <div class="logo">
+              <img src="./image/zz.png">
 
-        </div>
-        <div class="nav-links">
-          <div class="sidebar-logo">
-            <!-- <span class="logo-name"></span>
-              <i class='bx bx-x' ></i> -->
           </div>
-          <ul class="links">
-            <li><a href="/dashboard">HOME</a></li>
-            <li>
-              <a href="/dashboard">Degree books</a>
-              <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-              <ul class="htmlCss-sub-menu sub-menu">
-
-                <li class="more">
-                  <span><a href="#">Bsc-IT</a>
-                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
-                  </span>
-                  <ul class="more-sub-menu sub-menu">
-                    <li><a href="/itsem1">Sem 1</a></li>
-                    <li><a href="/itsem2">Sem 2</a></li>
-                    <li><a href="/itsem3">Sem 3</a></li>
-                    <li><a href="/itsem4">Sem 4</a></li>
-                    <li><a href="/itsem5">Sem 5</a></li>
-                    <li><a href="/itsem6">Sem 6</a></li>
+          <div class="nav-links">
+              <div class="sidebar-logo">
+                <!-- <span class="logo-name"></span>
+                  <i class='bx bx-x' ></i> -->
+              </div>
+              <ul class="links">
+                 
+                <li><a href="/dashboard">Home</a></li>
+                <li>
+                  <a href="/dashboard">Degree books</a>
+                  <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+                  <ul class="htmlCss-sub-menu sub-menu">
+    
+                    <li class="more">
+                      <span><a href="#">Bsc-IT</a>
+                        <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                      </span>
+                      <ul class="more-sub-menu sub-menu">
+                        <li><a href="/itsem1">Sem 1</a></li>
+                        <li><a href="/itsem2">Sem 2</a></li>
+                        <li><a href="/itsem3">Sem 3</a></li>
+                        <li><a href="/itsem4">Sem 4</a></li>
+                        <li><a href="/itsem5">Sem 5</a></li>
+                        <li><a href="/itsem6">Sem 6</a></li>
+                      </ul>
+                    </li>
+    
+    
+                    <li class="more">
+                      <span><a href="#">BMS</a>
+                        <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                      </span>
+                      <ul class="more-sub-menu sub-menu">
+                        <li><a href="/bmssem1">Sem 1</a></li>
+                        <li><a href="/bmssem2">Sem 2</a></li>
+                        <li><a href="/bmssem3">Sem 3</a></li>
+                        <li><a href="/bmssem4">Sem 4</a></li>
+                        <li><a href="/bmssem5">Sem 5</a></li>
+                        <li><a href="/bmssem6">Sem 6</a></li>
+                      </ul>
+                    </li>
+    
+                    
+                      
+    
+    
+                    <li class="more">
+                      <span><a href="#">Bcom</a>
+                        <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                      </span>
+                      <ul class="more-sub-menu sub-menu">
+                        <li><a href="/bcom1">Sem 1</a></li>
+                        <li><a href="/bcom2">Sem 2</a></li>
+                        <li><a href="/bcom3">Sem 3</a></li>
+                        <li><a href="/bcom4">Sem 4</a></li>
+                        <li><a href="/bcom5">Sem 5</a></li>
+                        <li><a href="/bcom6">Sem 6</a></li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
+                <li><a href="#searchResults">Top Books</a></li>
+                <li><a href="#footer">Contact us </a></li>
+    
+              </ul>
+            </div>
+            
+            <div class="search-box">
+              <i class='bx bx-search'></i>
+              <div class="input-box">
+                  <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchBooks()">
+                  <!-- <button type="button" onclick="searchBooks()" class="search-button"
+                  aria-placeholder="search">Search</button> -->
 
+              </div>
 
-                <li class="more">
-                  <span><a href="#">BMS</a>
-                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
-                  </span>
-                  <ul class="more-sub-menu sub-menu">
-                    <li><a href="/bmssem1">Sem 1</a></li>
-                    <li><a href="/bmssem2">Sem 2</a></li>
-                    <li><a href="/bmssem3">Sem 3</a></li>
-                    <li><a href="/bmssem4">Sem 4</a></li>
-                    <li><a href="/bmssem5">Sem 5</a></li>
-                    <li><a href="/bmssem6">Sem 6</a></li>
-                  </ul>
+          </div>
+
+          <div class="cart">
+              <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
+          </div>
+      </div>
+      <% if (user) { %>
+          <div class="profile-dropdown">
+              <div onclick="toggle()" class="profile-dropdown-btn">
+                <div class="profile-img">
+                  <i class="fa-solid fa-circle"></i>
+                </div>
+      
+                <span>
+                  <%= user.name %>
+                  <i class="fa-solid fa-angle-down"></i>
+                </span>
+              </div>
+      
+              <ul class="profile-dropdown-list">
+      
+                <li class="profile-dropdown-list-item">
+                  <a href="#">
+                    <i class="fa-regular fa-envelope"></i>
+                    <%= user.email %>
+                  </a>
                 </li>
-
-                <!-- 
-                  <li class="more">
-                    <span><a href="#">BA</a>
-                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
-                  </span>
-                  <ul class="more-sub-menu sub-menu">
-                    <li><a href="#">Sem 1</a></li>
-                    <li><a href="#">Sem 2</a></li>
-                    <li><a href="#">Sem 3</a></li>
-                    <li><a href="#">Sem 4</a></li>
-                    <li><a href="#">Sem 5</a></li>
-                    <li><a href="#">Sem 6</a></li>
-                  </ul>
+      
+                <li class="profile-dropdown-list-item">
+                  <a href="#">
+                      <i class="fa-solid fa-phone"></i>
+                    <%=user.contact%>
+                  </a>
                 </li>
-
-
-
-                  <li class="more">
-                    <span><a href="#">BAF</a>
-                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
-                  </span>
-                  <ul class="more-sub-menu sub-menu">
-                    <li><a href="">Sem 1</a></li>
-                    <li><a href="">Sem 2</a></li>
-                    <li><a href="">Sem 3</a></li>
-                    <li><a href="">Sem 4</a></li>
-                    <li><a href="">Sem 5</a></li>
-                    <li><a href="">Sem 6</a></li>
-                  </ul>
-                </li>            
-                 -->
-
-
-                <li class="more">
-                  <span><a href="#">Bcom</a>
-                    <i class='bx bxs-chevron-right arrow more-arrow'></i>
-                  </span>
-                  <ul class="more-sub-menu sub-menu">
-                    <li><a href="/bcom1">Sem 1</a></li>
-                    <li><a href="/bcom2">Sem 2</a></li>
-                    <li><a href="/bcom3">Sem 3</a></li>
-                    <li><a href="/bcom4">Sem 4</a></li>
-                    <li><a href="/bcom5">Sem 5</a></li>
-                    <li><a href="/bcom6">Sem 6</a></li>
-                  </ul>
+      
+                <li class="profile-dropdown-list-item">
+                  <a href="#">
+                      <i class="fa-solid fa-book"></i>
+                      <%= user.clas %>
+                  </a>
+                </li>
+      
+                
+                <hr />
+      
+                <li class="profile-dropdown-list-item">
+                  <a href="/sign">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Log out
+                  </a>
                 </li>
               </ul>
-            </li>
-            <li><a href="/dashboard">Top books</a></li>
-            <!-- <li><a href="/dashboard">New Arrivals</a></li> -->
-
-          </ul>
-        </div>
-        <div class="search-box">
-          <i class='bx bx-search'></i>
-          <div class="input-box">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchBooks()">
-            <button type="button" onclick="searchBooks()" class="search-button"
-              aria-placeholder="search">Search</button>
-
-          </div>
-        </div>
-        <div class="cart">
-          <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
-        </div>
-      </div>
-    </nav>
+            </div>
+            <% } %>
+  </nav>
   </section>
 
 

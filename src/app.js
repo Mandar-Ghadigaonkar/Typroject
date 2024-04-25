@@ -4,7 +4,7 @@ const ejs = require("ejs");
 const cors = require("cors");
 const app = express();
 const path = require("path");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 var bodyparser = require("body-parser");
 const PORT = process.env.PORT || 8002;
@@ -79,7 +79,7 @@ app.get("/", (req, res) => {
 
 app.get("/forgott", (req, res) => {
   res.render("forgot2", { errorMessage: "" }); // Pass an empty errorMessage initially
-})
+});
 app.get("/resetpassword", (req, res) => {
   res.render("resetpassword");
 });
@@ -87,18 +87,18 @@ app.get("/resetpassword", (req, res) => {
 app.post("/restpass", (req, res) => {
   const { newPassword, confirmPassword, uname } = req.body;
   console.log(newPassword);
-  console.log("update for ",uname);
+  console.log("update for ", uname);
 
   // Hash both the new password and confirm password
   bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
     if (err) {
-      console.error('Error hashing password: ', err);
+      console.error("Error hashing password: ", err);
       return res.status(500).send("Error updating password");
     }
 
     bcrypt.hash(confirmPassword, 10, (err, hashedConfirmPassword) => {
       if (err) {
-        console.error('Error hashing confirm password: ', err);
+        console.error("Error hashing confirm password: ", err);
         return res.status(500).send("Error updating password");
       }
 
@@ -112,7 +112,7 @@ app.post("/restpass", (req, res) => {
           } else {
             console.log(results.affectedRows);
             if (results.affectedRows !== 0) {
-               res.redirect('/sign');
+              res.redirect("/sign");
             }
           }
         }
@@ -121,30 +121,24 @@ app.post("/restpass", (req, res) => {
   });
 });
 
-
-
-
-
 // kamu
 
 app.post("/forgott", (req, res) => {
-  const { uname, otp } = req.body; 
-  const u = req.session.uname || ''; 
+  const { uname, otp } = req.body;
+  const u = req.session.uname || "";
   console.log(uname + " forgot api 1");
 
-  if (otps[uname] === otp) { 
+  if (otps[uname] === otp) {
     console.log(otps[uname]);
 
-    
-    res.render('resetpassword', { uname: uname }); 
+    res.render("resetpassword", { uname: uname });
 
-    delete otps[uname]; 
+    delete otps[uname];
   } else {
-    res.status(400).send('Invalid OTP'); 
-    res.render('forgot2')
+    res.status(400).send("Invalid OTP");
+    res.render("forgot2");
   }
 });
-
 
 // app.post("/forgott", (req, res) => {
 //   const { uname, otp } = req.body;
@@ -155,7 +149,6 @@ app.post("/forgott", (req, res) => {
 //     res.render('forgot2', { errorMessage: "Invalid OTP" });
 //   }
 // });
-
 
 // me
 
@@ -172,13 +165,6 @@ app.post("/forgott", (req, res) => {
 //   }
 // })
 
-
-
-
-
-
-
-
 // kamu
 const otps = {};
 app.post("/sendotp", (req, res) => {
@@ -194,12 +180,17 @@ app.post("/sendotp", (req, res) => {
         // res.json(results);cls
         if (results[0] === undefined) {
           console.log("user not found");
-        // Render the forgot2 template with error message
-        res.render('forgot2', { errorMessage: "User not found." });
-        } else { 
+          // Render the forgot2 template with error message
+          res.render("forgot2", { errorMessage: "User not found." });
+        } else {
           console.log(results);
 
-          const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false, specialChars: false });
+          const otp = otpGenerator.generate(6, {
+            digits: true,
+            alphabets: false,
+            upperCase: false,
+            specialChars: false,
+          });
           // const otp = "1";
 
           otps[data.uname] = otp;
@@ -212,8 +203,6 @@ app.post("/sendotp", (req, res) => {
     }
   );
 });
-
-
 
 //me
 // const otps = {};
@@ -255,7 +244,7 @@ const transporter = nodemailer.createTransport({
     pass: "bqat icqg dwng dxfe", // Your password
   },
 });
-          
+
 // Function to send OTP email
 function sendOTPEmail(toEmail, otp) {
   // Compile the template
@@ -301,9 +290,6 @@ app.post("/opt", (req, res) => {
 
 ///////////////////////////////////////////////////////////////// FORGOT PASSWORD END HERE //////////////////////////////////////////////////////////////////////////
 
-
-
-
 /////////////////////////////////////////////////////////////////////// POLICY PAGE GET HERE ///////////////////////////////////////////////////////////////////////////////
 
 app.get("/policy", (req, res) => {
@@ -312,10 +298,8 @@ app.get("/policy", (req, res) => {
 
 ///////////////////////////////////////////////////////////////////// POLICY END HERE //////////////////////////////////////////////////////////////////////////////////
 
-
 //////////////////////////////////////////////////////////////////// USER SIGNIN AND SIGNUP LOGIC START HERE /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////    ALL GET AND POST AND JWT TOKEN   ////////////////////////////////////////////////////////////
-
 
 app.get("/users", (req, res) => {
   connection.query("SELECT * FROM students", (error, results, fields) => {
@@ -329,102 +313,127 @@ app.get("/users", (req, res) => {
   });
 });
 
-app.post('/sign', (req, res) => {
-  const { name, clas, contact, email, password, confirmpassword, gender } = req.body;
+app.post("/sign", (req, res) => {
+  const { name, clas, contact, email, password, confirmpassword, gender } =
+    req.body;
 
   // Check if password matches confirm password
   if (password !== confirmpassword) {
-      return res.render('registration', { errorMessage: "Passwords do not match" });
+    return res.render("registration", {
+      errorMessage: "Passwords do not match",
+    });
   }
 
   // Hash the password
   bcrypt.hash(password, 10, (err, hashedPassword) => {
-      if (err) {
-          console.error('Error hashing password: ', err);
-          return res.status(500).send("Error registering user");
-      }
+    if (err) {
+      console.error("Error hashing password: ", err);
+      return res.status(500).send("Error registering user");
+    }
 
-      // Store the hashed password in the database
-      connection.query('INSERT INTO reders (name, clas, contact, email, password, confirmpassword, gender) VALUES (?,?,?,?,?,?,?)', [name, clas, contact, email, hashedPassword, hashedPassword, gender], (error, results, fields) => {
-          if (error) {
-              // Handle unique email constraint error
-              if (error.code === 'ER_DUP_ENTRY') {
-                  return res.render('registration', { errorMessage: "Email already exists" });
-              } else {
-                  console.log(error);
-                  return res.status(500).send("Error registering user");
-              }
+    // Store the hashed password in the database
+    connection.query(
+      "INSERT INTO reders (name, clas, contact, email, password, confirmpassword, gender) VALUES (?,?,?,?,?,?,?)",
+      [name, clas, contact, email, hashedPassword, hashedPassword, gender],
+      (error, results, fields) => {
+        if (error) {
+          // Handle unique email constraint error
+          if (error.code === "ER_DUP_ENTRY") {
+            return res.render("registration", {
+              errorMessage: "Email already exists",
+            });
+          } else {
+            console.log(error);
+            return res.status(500).send("Error registering user");
           }
+        }
 
-          // Generate JWT token
-          const accessToken = jwt.sign({ email: email }, "mynameismandariamdoingprojectononlinebookrentalsystem", { expiresIn: '2h' });
-          console.log("Generated token:", accessToken);
-          res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 });
-          res.redirect('/sign');
-          console.log('User added:', name, clas, contact, email, hashedPassword, hashedPassword, gender);
-      });
+        // Generate JWT token
+        const accessToken = jwt.sign(
+          { email: email },
+          "mynameismandariamdoingprojectononlinebookrentalsystem",
+          { expiresIn: "2h" }
+        );
+        console.log("Generated token:", accessToken);
+        res.cookie("jwt", accessToken, {
+          httpOnly: true,
+          maxAge: 60 * 60 * 1000,
+        });
+        res.redirect("/sign");
+        console.log(
+          "User added:",
+          name,
+          clas,
+          contact,
+          email,
+          hashedPassword,
+          hashedPassword,
+          gender
+        );
+      }
+    );
   });
 });
 
-
-app.get('/sign', (req, res) => {
+app.get("/sign", (req, res) => {
   const errorMessage = req.query.error || "";
-  res.render('sigin', { errorMessage: errorMessage }); 
+  res.render("sigin", { errorMessage: errorMessage });
 });
 
-
-app.get('/regi', (req, res) => {
-  res.render('registration', { errorMessage: "" });
+app.get("/regi", (req, res) => {
+  res.render("registration", { errorMessage: "" });
 });
-
 
 // Sign-In Endpoint
-app.post('/home', (req, res) => {
+app.post("/home", (req, res) => {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM reders WHERE email = ?';
+  const sql = "SELECT * FROM reders WHERE email = ?";
   connection.query(sql, [email], (err, results) => {
     if (err) {
-      console.error('Error retrieving user: ', err);
-      return res.send('Error logging in');
+      console.error("Error retrieving user: ", err);
+      return res.send("Error logging in");
     }
     if (results.length === 0) {
-      return res.redirect('/sign?error=Email not registered');
+      return res.redirect("/sign?error=Email not registered");
     }
 
     const user = results[0];
     // Compare the hashed password
     bcrypt.compare(password, user.password, (err, result) => {
       if (err) {
-        console.error('Error comparing passwords: ', err);
-        return res.send('Error logging in');
+        console.error("Error comparing passwords: ", err);
+        return res.send("Error logging in");
       }
       if (!result) {
         // Password doesn't match, redirect to sign-in page with error
-        return res.redirect('/sign?error=Incorrect email or password');
+        return res.redirect("/sign?error=Incorrect email or password");
       }
 
       // Password matches, generate JWT token
       const accessToken = jwt.sign(
         { email: user.email },
         "mynameismandariamdoingprojectononlinebookrentalsystem",
-        { expiresIn: '2h' }
+        { expiresIn: "2h" }
       );
       console.log("Generated token:", accessToken);
 
       // Set JWT in a cookie (optional)
-      res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 60 * 60 * 1000 });
+      res.cookie("jwt", accessToken, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 1000,
+      });
 
       // Store user information in session
       req.session.user = {
         email: user.email,
         name: user.name,
-        contact:user.contact,
-        clas:user.clas,
+        contact: user.contact,
+        clas: user.clas,
         // Add other user information you want to store
       };
 
       // Redirect to dashboard
-      res.redirect('/dashboard');
+      res.redirect("/dashboard");
     });
   });
 });
@@ -453,8 +462,6 @@ function authenticateToken(req, res, next) {
 
 //////////////////////////////////////////////////////////////// JWT AND SIGNIN AND SIGNUP END HERE //////////////////////////////////////////////////////////////////////
 
-
-
 ///////////////////////////////////////////////////////////////// DASHBOARD GET HERE /////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/dashboard", (req, res) => {
@@ -462,7 +469,7 @@ app.get("/dashboard", (req, res) => {
 
   if (!user) {
     // Redirect to sign-in page if user is not logged in
-    return res.redirect('/sign');
+    return res.redirect("/sign");
   }
 
   connection.query("SELECT * FROM featured ", (error, result) => {
@@ -478,8 +485,6 @@ app.get("/dashboard", (req, res) => {
 });
 
 ////////////////////////////////////////////////////////////////// DASHBOARD END HERE ///////////////////////////////////////////////////////////////////////////////////////
-
-
 
 ////////////////////////////////////////////////////////////////// SEARCH LOGIC FOR ALL BOOKS ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////// ALL GET AND POST LOGIC HERE //////////////////////////////////////////////////////////////////////////
@@ -539,8 +544,6 @@ app.get("/search", function (req, res) {
 
 ////////////////////////////////////////////////////////////////////////// SEARCH LOGIC END HERE //////////////////////////////////////////////////////////////////////////
 
-
-
 //////////////////////////////////////////////////////////////////////// ALL BOOKS GET AND POST LOGIC HERE //////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////// ADD TO CART AND CART TOTAL LOGIC HERE ///////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////// REMOVE BOOK AND RETOTAL LOGIC HERE //////////////////////////////////////////////////////////////
@@ -570,73 +573,110 @@ function calculateTotal(cart, req) {
 ///////////////////////// BCOM START ///////////////////////////////
 
 app.get("/bcom1", function (req, res) {
+  const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bcom1", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bcomsem1", { result: result });
+      res.render("bcomsem1", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bcom2", function (req, res) {
+  
+  const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bcom", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bcomsem2", { result: result });
+      res.render("bcomsem2", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bcom3", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bcom3", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bcomsem3", { result: result });
+      res.render("bcomsem3", { result: result ,user: user });
     }
   });
 });
 
 app.get("/bcom4", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bcom4", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bcomsem4", { result: result });
+      res.render("bcomsem4", { result: result ,user: user  });
     }
   });
 });
 
 app.get("/bcom5", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bcom5", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bcomsem5", { result: result });
+      res.render("bcomsem5", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bcom6", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bcom6", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bcomsem6", { result: result });
+      res.render("bcomsem6", { result: result,user: user });
     }
   });
 });
@@ -646,72 +686,108 @@ app.get("/bcom6", function (req, res) {
 //////////////////// BMS START HERE /////////////////////////
 
 app.get("/bmssem1", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bms1", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bmssem1", { result: result });
+      res.render("bmssem1", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bmssem2", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bms2", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bmssem2", { result: result });
+      res.render("bmssem2", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bmssem3", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bms3", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bmssem3", { result: result });
+      res.render("bmssem3", { result: result,user: user  });
     }
   });
 });
 app.get("/bmssem4", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bms4", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bmssem4", { result: result });
+      res.render("bmssem4", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bmssem5", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bms5", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bmssem5", { result: result });
+      res.render("bmssem5", { result: result,user: user  });
     }
   });
 });
 
 app.get("/bmssem6", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM bms6", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("bmssem6", { result: result });
+      res.render("bmssem6", { result: result ,user: user });
     }
   });
 });
@@ -721,25 +797,37 @@ app.get("/bmssem6", function (req, res) {
 /////////////////// IT START HERE ///////////////////////////////////
 
 app.get("/itsem1", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM itse1", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("itsem1", { result: result });
+      res.render("itsem1", { result: result,user: user  });
     }
   });
 });
 
 app.get("/itsem2", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM itse2", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("itsem2", { result: result });
+      res.render("itsem2", { result: result ,user: user });
     }
   });
 });
@@ -751,49 +839,66 @@ app.get("/itsem3", function (req, res) {
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("itsem3", { result: result });
+      res.render("itsem3", { result: result ,user: user });
     }
   });
 });
 
 app.get("/itsem4", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM itse4", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("itsem4", { result: result });
+      res.render("itsem4", { result: result,user: user  });
     }
   });
 });
 
 app.get("/itsem5", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM itse5", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("itsem5", { result: result });
+      res.render("itsem5", { result: result ,user: user });
     }
   });
 });
 
 app.get("/itsem6", function (req, res) {
+   const user = req.session.user; // Retrieve user information from session
+
+  if (!user) {
+    // Redirect to sign-in page if user is not logged in
+    return res.redirect('/sign');
+  }
   connection.query("SELECT * FROM itse6", (error, result) => {
     if (error) {
       console.log(error);
       res.status(401).send("Internal Server Error");
     } else {
       console.log(result);
-      res.render("itsem6", { result: result });
+      res.render("itsem6", { result: result,user: user  });
     }
   });
 });
 
 /////////////////////// IT END HERE ////////////////////////////
-
 
 ///////////////// ADD BOOKS TO CART LOGIC //////////////////////
 ////////////////// CART POST AND GET //////////////////////////
@@ -954,39 +1059,33 @@ app.get("/check", function (req, res) {
 
 ////////////////////////////////////////////////////////////////////// ADD TO CART AND BOOKS GET POST END HERE /////////////////////////////////////////////////////////
 
-
-
 ///////////////////////////////////////////////////////////////////// ADMIN PAGE START HERE ///////////////////////////////////////////////////////////////////////////
 
 ////////////////// ADMIN LOGIN ////////////////
 
-app.post('/adminlog', (req, res) => {
+app.post("/adminlog", (req, res) => {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM admin WHERE email = ?';
+  const sql = "SELECT * FROM admin WHERE email = ?";
   connection.query(sql, [email], (err, results) => {
-      if (err) {
-          console.error('Error retrieving user: ', err);
-          res.send('Error logging in');
+    if (err) {
+      console.error("Error retrieving user: ", err);
+      res.send("Error logging in");
+    } else {
+      if (results.length > 0) {
+        const user = results[0];
+        if (password === user.password) {
+          res.render("adminhome");
+        } else {
+          // Password doesn't match, redirect to sign-in page with error
+          res.redirect("/adminlog?error=Incorrect email or password");
+        }
       } else {
-          if (results.length > 0) {
-              const user = results[0];
-              if (password === user.password) {
-                res.render("adminhome");
-
-              } else {
-                  // Password doesn't match, redirect to sign-in page with error
-                  res.redirect('/adminlog?error=Incorrect email or password');
-              }
-          } else {
-              // No user found with the given email, redirect to sign-in page with error
-              res.redirect('/adminlog?error=Incorrect email or password');
-          }
-
+        // No user found with the given email, redirect to sign-in page with error
+        res.redirect("/adminlog?error=Incorrect email or password");
       }
-
+    }
   });
 });
-
 
 app.get("/adminlog", (req, res) => {
   const errorMessage = req.query.error || "";
@@ -1082,7 +1181,7 @@ app.get("/admin", (req, res) => {
 app.get("/adminhome", (req, res) => {
   res.render("adminhome");
 });
-  
+
 ////////////////// ADMIN ANALYSIS ///////////////////
 
 app.get("/adminana", (req, res) => {

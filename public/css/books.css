@@ -3,27 +3,36 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
 }
-body{
-  min-height: 100vh;
+:root {
+  --primary: #eeeeee;
+  --secondary: #227c70;
+  --green: #82cd47;
+  --secondary-light: rgb(34, 124, 112, 0.2);
+  --secondary-light-2: rgb(127, 183, 126, 0.1);
+  --white: #fff;
+  --black: #393e46;
+
+  --shadow: 0px 2px 8px 0px var(--secondary-light);
 }
 
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
+
+
+section nav{
   width: 100%;
-  font-family:Georgia, 'Times New Roman', Times, serif; 
-  height: 101px;
-  background: linear-gradient(to top, aqua, white);
-  background-position: center center;
-
-  /* box-shadow: 0 7px 50px rgb(255, 255, 255); */
-  z-index: 99;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 0 10px #089da1;
+  background: linear-gradient(to top,aqua, white);
+  position: fixed;
+  left: 0;
+  z-index: 100;
 }
 nav .navbar {
-  height: 100%;
+  height: 80%;
   max-width: 1247px;
   width: 100%;
   margin-left: 192px;
@@ -38,7 +47,7 @@ nav .navbar {
   width: 189px;
   height: 130px;
   cursor: pointer;
-  margin: 5px -10rem;
+  margin: 5px -5rem;
 }
 
 nav .navbar .nav-links {
@@ -47,6 +56,7 @@ nav .navbar .nav-links {
 }
 nav .navbar .links {
   display: flex;
+  margin-top: -11PX;
 }
 
 
@@ -65,8 +75,8 @@ nav .navbar .links li a {
   height: 100%;
   text-decoration: none;
   white-space: nowrap;
-  color: #000000;
   font-family:Georgia, 'Times New Roman', Times, serif; 
+  color: #000000;
   font-size: 15px;
   font-weight: 800;
 }
@@ -107,8 +117,8 @@ nav .navbar .links li:hover .js-sub-menu{
 .navbar .links li .sub-menu a{
   color: #000000;
   font-size: 15px;
-  font-weight: 700;
   font-family:Georgia, 'Times New Roman', Times, serif; 
+  font-weight: 700;
 }
 .navbar .links li .sub-menu .more-arrow{
   line-height: 40px;
@@ -130,6 +140,7 @@ nav .navbar .links li:hover .js-sub-menu{
 .navbar .search-box {
   position: relative;
   height: 40px;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
   /* margin-left: 40px; */
   width: 40px;
 }
@@ -139,8 +150,8 @@ nav .navbar .links li:hover .js-sub-menu{
   width: 100%;
   line-height: 40px;
   text-align: center;
-  margin-left: 197px;
-  font-size: 22px;
+  margin-left: 185px;
+  font-size: 25px;
   color: #000000;
   font-weight: 600;
   cursor: pointer;
@@ -150,10 +161,10 @@ nav .navbar .links li:hover .js-sub-menu{
   position: absolute;
   right: calc(100% - 40px);
   top: 80px;
-  font-family:Georgia, 'Times New Roman', Times, serif; 
   height: 60px;
   margin-left: 197px;
   width: 300px;
+  font-family:Georgia, 'Times New Roman', Times, serif; 
   background: #00edf1;
   border-radius: 6px;
   opacity: 0;
@@ -161,11 +172,10 @@ nav .navbar .links li:hover .js-sub-menu{
   /* transition: all 0.4s ease; */
 }
 .navbar.showInput .search-box .input-box {
-  top: 35px;
-  top: 35px;
-  left: 1%;
-  opacity: 1;
+  top: 38px;
+  left: -30%;
   font-family:Georgia, 'Times New Roman', Times, serif; 
+  opacity: 1;
   margin-left: -64px;
   pointer-events: auto;
   background: #00edf1;
@@ -201,7 +211,6 @@ nav .navbar .links li:hover .js-sub-menu{
 .navbar .bx-menu {
   display: none;
 }
-
 .cart {
   position: relative;
   height: 40px;
@@ -213,12 +222,123 @@ nav .navbar .links li:hover .js-sub-menu{
   width: 100%;
   line-height: 40px;
   text-align: center;
-  margin-left: -35px;
-  font-size: 19px;
+  margin-left: 8px;
+  font-size: 23px;
   color: #000000;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+.profile-dropdown {
+  position: relative;
+  width: fit-content;
+}
+
+section .profile-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 200px;
+  
+  margin-right: 20px;
+  border-radius: 50px;
+  color: var(--black);
+  /* background-color: white;
+  box-shadow: var(--shadow); */
+
+  cursor: pointer;
+  border: 2px solid black;
+  transition: box-shadow 0.2s ease-in, background-color 0.2s ease-in,
+    border 0.3s;
+}
+
+ section .profile-dropdown-btn:hover {
+  background-color: var(--secondary-light-2);
+  box-shadow: var(--shadow);
+}
+
+.profile-img {
+  position: relative;
+  background-color: black;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: url(../image/istockphoto-1495088043-612x612.jpg);
+  background-size: cover;
+}
+
+.profile-img i {
+  position: absolute;
+  right: 0;
+  bottom: 0.3rem;
+  font-size: 0.5rem;
+  color: var(--green);
+}
+
+.profile-dropdown-btn span {
+  margin: 0 0.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 12px;
+  color: black;
+}
+
+.profile-dropdown-list {
+  position: absolute;
+  top: 52px;
+  margin-right: 10px;
+  width: 220px;
+  right: 0;
+  background-color: var(--white);
+  border-radius: 10px;
+  max-height: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: max-height 0.5s;
+}
+
+.profile-dropdown-list hr {
+  border: 0.5px solid var(--green);
+}
+
+.profile-dropdown-list.active {
+  max-height: 500px;
+}
+
+.profile-dropdown-list-item {
+  padding: 0.5rem 0rem 0.5rem 1rem;
+  transition: background-color 0.2s ease-in, padding-left 0.2s;
+}
+
+.profile-dropdown-list-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: black;
+}
+
+.profile-dropdown-list-item a i {
+  margin-right: 0.8rem;
+  font-size: 1.1rem;
+  width: 2.3rem;
+  height: 2.3rem;
+  background-color: aquamarine;
+  color: black;
+  line-height: 2.3rem;
+  text-align: center;
+  margin-right: 1rem;
+  border-radius: 50%;
+  transition: margin-right 0.3s;
+}
+
+.profile-dropdown-list-item:hover {
+  padding-left: 1.5rem;
+  background-color: var(--secondary-light);
 }
 
 /* Display the search results */
@@ -324,7 +444,7 @@ marquee{
 
 #searchResults .arrivals_box .arrivals_card{
     width: 247px;
-    height: 450px;
+    height: 409px;
     text-align: center;
     padding: 6px;
     border: 1px solid #919191;
