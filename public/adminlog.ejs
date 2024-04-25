@@ -5,12 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>* {
         font-family: sans-serif;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
+    #errorMessage{
+      font-size: 18px;
+      text-align: center;
+      font-weight: 800;
+      
+    }
+
     
     body {
         display: flex;
@@ -185,11 +194,11 @@
 
             <div class="input-box">
                 <input type="email" name="email" placeholder="Username" required>
-                <i class="bx bxs-user"></i>
+                <i class="fa-solid fa-user"></i>
             </div>
             <div class="input-box">
                 <input type="password" name="password" placeholder="Password" required>
-                <i class="bx bxs-lock-alt"></i>
+                <i class="fa-solid fa-lock"></i>
             </div>
 
             <div class="remember-forgot">
