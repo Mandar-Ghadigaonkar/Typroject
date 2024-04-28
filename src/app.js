@@ -4,6 +4,8 @@ const ejs = require("ejs");
 const cors = require("cors");
 const app = express();
 const path = require("path");
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 const bcrypt = require("bcryptjs");
 
 var bodyparser = require("body-parser");
@@ -39,6 +41,7 @@ const emailTemplate = `
 // Set the view engine to EJS
 app.set("view engine", "ejs");
 app.use(express.json());
+
 app.use(express.static("public")); //booh.js
 app.use(express.urlencoded({ extended: false }));
 // Set the directory for your views (HTML files)
@@ -51,6 +54,8 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
+app.use(bodyparser.json());
+
 
 /////////////////////////////////////////////////////////////////// MAIN CODE START FROM HERE ///////////////////////////////////////////////////////////////////////////
 
@@ -314,8 +319,7 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/sign", (req, res) => {
-  const { name, clas, contact, email, password, confirmpassword, gender } =
-    req.body;
+  const { name, clas, contact, email, password, confirmpassword, gender } = req.body;
 
   // Check if password matches confirm password
   if (password !== confirmpassword) {
@@ -333,8 +337,8 @@ app.post("/sign", (req, res) => {
 
     // Store the hashed password in the database
     connection.query(
-      "INSERT INTO reders (name, clas, contact, email, password, confirmpassword, gender) VALUES (?,?,?,?,?,?,?)",
-      [name, clas, contact, email, hashedPassword, hashedPassword, gender],
+      "INSERT INTO cust (name, clas, contact, email, password, gender) VALUES (?, ?, ?, ?, ?, ?)",
+      [name, clas, contact, email, hashedPassword, gender],
       (error, results, fields) => {
         if (error) {
           // Handle unique email constraint error
@@ -360,34 +364,28 @@ app.post("/sign", (req, res) => {
           maxAge: 60 * 60 * 1000,
         });
         res.redirect("/sign");
-        console.log(
-          "User added:",
-          name,
-          clas,
-          contact,
-          email,
-          hashedPassword,
-          hashedPassword,
-          gender
-        );
+        console.log("User added:", name, clas, contact, email, hashedPassword, gender);
       }
     );
   });
-});
-
-app.get("/sign", (req, res) => {
-  const errorMessage = req.query.error || "";
-  res.render("sigin", { errorMessage: errorMessage });
 });
 
 app.get("/regi", (req, res) => {
   res.render("registration", { errorMessage: "" });
 });
 
+
+
+app.get("/sign", (req, res) => {
+  const errorMessage = req.query.error || "";
+  res.render("sigin", { errorMessage: errorMessage });
+});
+
+
 // Sign-In Endpoint
 app.post("/home", (req, res) => {
   const { email, password } = req.body;
-  const sql = "SELECT * FROM reders WHERE email = ?";
+  const sql = "SELECT * FROM cust WHERE email = ?";
   connection.query(sql, [email], (err, results) => {
     if (err) {
       console.error("Error retrieving user: ", err);
@@ -1034,6 +1032,9 @@ app.get("/checkoutconfirm/:orderId", (req, res) => {
       return;
     }
 
+    // Parse order.items only if it's not null
+    const items = order.items ? JSON.parse(order.items) : [];
+
     res.render("checkoutconfirm", {
       name: order.name,
       clas: order.clas,
@@ -1041,14 +1042,32 @@ app.get("/checkoutconfirm/:orderId", (req, res) => {
       email: order.email,
       rentalDays: order.rentalDays,
       total: order.total,
-      items: JSON.parse(order.items),
+      items: items, // Pass the items data to the template
       id: order.id,
+      userData: null,
     });
   });
 });
 
+
+
 app.get("/checkoutconfirm", (req, res) => {
-  res.render("checkoutconfirm");
+  if (!req.session.user) {
+    // If not logged in, redirect to the sign-in page
+    return res.redirect("/sign");
+  }
+  // Fetch the userData object from the database or any other source
+  getOrderDetailsFromDB((err, userData) => {
+    if (err) {
+      console.error("Error fetching user data:", err);
+      res.status(500).send("An error occurred while processing your request.");
+      return;
+    }
+
+    res.render("checkoutconfirm", {
+      userData: userData // Pass the userData object to the template
+    });
+  });
 });
 
 app.get("/check", function (req, res) {
@@ -1056,6 +1075,91 @@ app.get("/check", function (req, res) {
   var total = req.session.total || 0;
   res.render("checkout", { cart: cart, total: total });
 });
+
+////////////////////////////////////////////////////////////////////  DOWNLOAD INVOICE ////////////////////////////////////////////////////
+app.get('/downloadInvoice', (req, res) => {
+  const id = req.query.id;
+  const name = req.query.name;
+  const clas = req.query.clas;
+  const email = req.query.email;
+  const contact = req.query.contact;
+  const rentalDays = req.query.rentalDays;
+  const items = req.query.items.split(',');
+  const total = req.query.total;
+
+  const doc = new PDFDocument();
+
+  const invoicePath = 'invoice.pdf';
+
+  // Pipe the PDF to a writable stream to save it
+  const stream = fs.createWriteStream(invoicePath);
+  doc.pipe(stream);
+
+  // Add logo and company name
+  doc.image('/test project error md/public/image/zz.png', 50, 50, { width: 80, height: 80 })
+      .text('Borrow Books', 50, 160, { align: 'left', fontSize: 16 });
+
+  // Add invoice heading
+  doc.fontSize(20).text('Invoice', { align: 'center' }).moveDown();
+  doc.fontSize(20).text('(Original for Recipient)', { align: 'center' }).moveDown();
+
+  // Add line after heading
+  doc.moveTo(50, doc.y)
+      .lineTo(550, doc.y)
+      .stroke();
+
+  // Add margin top between name and line
+  doc.moveDown();
+
+  // Add invoice details
+  doc.font('Helvetica').fontSize(12)
+      .text(`Order id: ${id}`)
+      .text(`Name: ${name}`)
+      .text(`Class: ${clas}`)
+      .text(`Email: ${email}`)
+      .text(`Contact: ${contact}`)
+      .text(`Rental Days: ${rentalDays}`)
+      .text('Items:')
+      .moveDown(0.5)
+      .list(items);
+
+  // Add line after heading
+  doc.moveTo(50, doc.y)
+      .lineTo(550, doc.y)
+      .stroke();
+
+  // Add total amount
+  doc.moveDown(0.5)
+      .fontSize(18)
+      .text(`Total: Rs ${total}`, { align: 'right' })
+      
+
+  // Add line after heading
+  doc.moveTo(50, doc.y)
+      .lineTo(550, doc.y)
+      .stroke(); 
+
+  // Add additional text
+  doc.moveDown(0.5)
+      .text('Sold By: Bowrrow Books');
+
+  // Finalize the PDF
+  doc.end();
+
+  // Wait for the PDF to be fully written before triggering download
+  stream.on('finish', () => {
+      const fileName = name || id || 'invoice'; // Use name if available, otherwise use id, or fallback to 'invoice'
+      res.download(invoicePath, `${fileName}.pdf`, (err) => {
+          if (err) {
+              console.error('Error downloading invoice:', err);
+          } else {
+              // Delete the generated PDF file after download
+              fs.unlinkSync(invoicePath);
+          }
+      });
+  });
+});
+
 
 ////////////////////////////////////////////////////////////////////// ADD TO CART AND BOOKS GET POST END HERE /////////////////////////////////////////////////////////
 
