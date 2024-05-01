@@ -109,7 +109,7 @@ app.post("/restpass", (req, res) => {
 
       // Update the hashed passwords in the database
       connection.query(
-        `UPDATE reders SET password='${hashedPassword}', confirmpassword='${hashedConfirmPassword}' WHERE email='${uname}';`,
+        `UPDATE cust SET password='${hashedPassword}', confirmpassword='${hashedConfirmPassword}' WHERE email='${uname}';`,
         (error, results, fields) => {
           if (error) {
             console.log(error);
@@ -132,6 +132,7 @@ app.post("/forgott", (req, res) => {
   const { uname, otp } = req.body;
   const u = req.session.uname || "";
   console.log(uname + " forgot api 1");
+  const errorMessage = "Invaild OTP";
 
   if (otps[uname] === otp) {
     console.log(otps[uname]);
@@ -140,8 +141,8 @@ app.post("/forgott", (req, res) => {
 
     delete otps[uname];
   } else {
-    res.status(400).send("Invalid OTP");
-    res.render("forgot2");
+    
+    res.render("forgot2", { errorMessage: errorMessage });
   }
 });
 
@@ -170,24 +171,26 @@ app.post("/forgott", (req, res) => {
 //   }
 // })
 
-// kamu
+
 const otps = {};
+
 app.post("/sendotp", (req, res) => {
   const data = req.body;
-  console.log(data + "sendOTP api");
+  const errorMessage = "User Not Found";
+
   connection.query(
-    `SELECT * FROM reders WHERE email="${data.uname}"; `,
+    `SELECT * FROM cust WHERE email="${data.uname}"; `,
     (error, results, fields) => {
       if (error) {
         console.log(error);
+        res.status(500).json({ error: "Internal Server Error" });
       } else {
-        console.log(typeof results);
-        // res.json(results);cls
         if (results[0] === undefined) {
+          // User not found
           console.log("user not found");
-          // Render the forgot2 template with error message
-          res.render("forgot2", { errorMessage: "User not found." });
+           res.redirect(`/forgott?errorMessage=${encodeURIComponent(errorMessage)}`); // Redirect with error message
         } else {
+          // User found
           console.log(results);
 
           const otp = otpGenerator.generate(6, {
@@ -196,18 +199,20 @@ app.post("/sendotp", (req, res) => {
             upperCase: false,
             specialChars: false,
           });
-          // const otp = "1";
 
           otps[data.uname] = otp;
           // Send OTP email
           sendOTPEmail(data.uname, otp);
 
-          res.status(200).send("OTP sent successfully.");
+          res.status(200).json({ successMessage: "OTP sent successfully." });
         }
       }
     }
   );
 });
+
+
+
 
 //me
 // const otps = {};
@@ -1199,7 +1204,7 @@ app.get("/adminlog", (req, res) => {
 ///////////////////////// IN ADMIN PAGE SHOW REGISTER USER INFO //////////////////////////
 
 app.get("/admin/users", (req, res) => {
-  connection.query("SELECT * FROM reders", (error, results, fields) => {
+  connection.query("SELECT * FROM cust", (error, results, fields) => {
     if (error) {
       console.log(error);
       res.status(500).send("Error fetching user data");
@@ -1278,6 +1283,25 @@ app.get("/admin", (req, res) => {
       res.render("adminbbok", { userData: userData });
     }
   });
+});
+
+// Route to handle status update
+app.put('/update-status/:orderId', (req, res) => {
+  const orderId = req.params.orderId;
+  const newStatus = req.body.status;
+
+  connection.query(
+    "UPDATE orderss SET status = ? WHERE id = ?",
+    [newStatus, orderId],
+    (error, results) => {
+      if (error) {
+        console.error("Error updating status: ", error);
+        res.status(500).send("Error updating status");
+      } else {
+        res.sendStatus(200);
+      }
+    }
+  );
 });
 
 /////////////////// ADMIN HOME PAGE /////////////////

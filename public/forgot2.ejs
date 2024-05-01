@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
-    <!-- <link rel="stylesheet" href="./css/resetpassword.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -84,7 +83,7 @@
             bottom: 240px;
             height: 3px;
             width: 100%;
-            background: linear-gradient(175deg, #000000, #ffffff);
+            /* background: linear-gradient(175deg, #000000, #ffffff); */
         }
 
         form {
@@ -195,114 +194,111 @@
 <body>
     <div class="go">
         <a href="/sign"><input type="submit" class="btn" value="Go back"></a>
-      </div>
+    </div>
     <div class="container">
         <h2>Forgot Password</h2>
-        <div id="errorMessage"><%= errorMessage %></div>
+        <div id="errorMessage" style="color: red;">
+            <% if(errorMessage) { %>
+                <%= errorMessage %>
+            <% } %>
+        </div>
 
-       
-                <form id="resetPasswordForm" onsubmit="forgot()" action="/forgott" method="post">
-
-                    <div class="input-field">
-                        <input type="email" id="uname" name="uname" required>
-                        <label>Enter Email</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="text" id="otp" required disabled>
-                        <label>Enter OTP</label>
-                    </div>
-
-
-                    <input type="submit" value="Forget" class="btn" />
-
-                </form>
-                <!-- <button onclick="forgot()">Forgot</button> -->
-                <button onclick="sendOTP()" id="sendbtn">Send</button>
+        <form id="resetPasswordForm" onsubmit="forgot()" action="/forgott" method="post">
+            <div class="input-field">
+                <input type="email" id="uname" name="uname" required>
+                <label>Enter Email</label>
+            </div>
+            <div class="input-field">
+                <input type="text" id="otp" required disabled>
+                <label>Enter OTP</label>
+            </div>
+            <input type="submit" value="Forget" class="btn" />
+        </form>
+        <button onclick="sendOTP()" id="sendbtn">Send</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <script  >
-        let  sendbtn=document.getElementById('sendbtn')
+    <script>
+        let sendbtn = document.getElementById('sendbtn')
         let otpInput = document.getElementById("otp")
         let unameInput = document.getElementById("uname")
         const sendOTP = () => {
-          // e.preventDefault();
-          // alert("click")
-          let otp = document.getElementById("otp").value;
-          let uname = document.getElementById("uname").value;
-        
-          const userData = {
-            uname: uname,
-          }; 
-        
-          if (uname.length!=0) {
-            
-          
-        
-          fetch("http://localhost:8002/sendotp", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              sendbtn.disabled=true
-              otpInput.disabled=false
-              // unameInput.disabled=true
-              return response.json();
-            })
-            .catch((error) => {
-              console.error("Forgot error:", error);
-              // err.innerHTML="password not tmatch";
-              // Optionally, you can display an error message to the user
-            });
-        
-          }
-        
-        //   alert(otp + "send btn");
-        };
-        
-        
+  let otp = document.getElementById("otp").value;
+  let uname = document.getElementById("uname").value;
+
+  const userData = {
+    uname: uname,
+  };
+
+  if (uname.length != 0) {
+    fetch("http://localhost:8002/sendotp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.errorMessage) {
+          // User not found, display error message
+          document.getElementById("errorMessage").innerText = data.errorMessage;
+        } else {
+          // User found, display success message
+          alert(data.successMessage);
+          sendbtn.disabled = true;
+          otpInput.disabled = false;
+        }
+      })
+      .catch((error) => {
+        console.error("Forgot error:", error);
+        // Optionally, you can display an error message to the user
+      });
+  }
+};
+
+
         const forgot = (e) => {
-          // e.preventDefault(); // Prevent the default form submission
-          let uname = document.getElementById("uname").value;
-          let otp = document.getElementById("otp").value;
-        
-          const userData = {
-              uname: uname,
-              otp: otp,
-          };
-        
-          fetch("http://localhost:8002/forgott", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify(userData),
-          })
-          .then((response) => {
-              if (response.redirected) {
-                  // If the response is a redirect, manually redirect the client
-                  // window.location.href = response.url; // Redirect to the provided URL
-              } else {
-                  // Handle JSON response or other scenarios
-                  return response.json();
-              }
-          })
-          .then((data) => {
-              // Handle JSON data if needed
-          })
-          .catch((error) => {
-              console.error("Forgot error:", error);
-              // Handle error scenarios
-          });
+            // e.preventDefault(); // Prevent the default form submission
+            let uname = document.getElementById("uname").value;
+            let otp = document.getElementById("otp").value;
+
+            const userData = {
+                uname: uname,
+                otp: otp,
+            };
+
+            fetch("http://localhost:8002/forgott", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userData),
+                })
+                .then((response) => {
+                    if (response.redirected) {
+                        // If the response is a redirect, manually redirect the client
+                        // window.location.href = response.url; // Redirect to the provided URL
+                    } else {
+                        // Handle JSON response or other scenarios
+                        return response.json();
+                    }
+                })
+                .then((data) => {
+                    // Handle JSON data if needed
+                })
+                .catch((error) => {
+                    console.error("Forgot error:", error);
+                    // Handle error scenarios
+                });
         };
-        </script>
+    </script>
 </body>
 
 </html>

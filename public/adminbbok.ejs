@@ -151,35 +151,31 @@
 
         // Function to update the status of an order
         function updateStatus(orderId) {
-            const newStatus = prompt('Enter new status (e.g., Rented, Returned):');
+    const newStatus = prompt('Enter new status (e.g., Rented, Returned):');
 
-            if (newStatus !== null && newStatus !== '') {
-                // Update status in localStorage
-                localStorage.setItem(`status_${orderId}`, newStatus);
-
-                // Update the status in the frontend
+    if (newStatus !== null && newStatus !== '') {
+        // Make a fetch request to update the status
+        fetch(`/update-status/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Update the status in the frontend if the request was successful
                 document.getElementById(`status_${orderId}`).textContent = newStatus;
+            } else {
+                throw new Error('Failed to update status');
             }
-        }
+        })
+        .catch(error => {
+            console.error('Error updating status:', error);
+        });
+    }
+}
 
-        // Function to fetch order statuses from localStorage
-        function fetchOrderStatuses() {
-            const tableRows = document.querySelectorAll('tbody tr');
-
-            tableRows.forEach(row => {
-                const orderId = row.querySelector('td:first-child').textContent;
-                const statusCell = row.querySelector(`#status_${orderId}`);
-                const storedStatus = localStorage.getItem(`status_${orderId}`);
-
-                if (storedStatus !== null) {
-                    // Update the status in the frontend
-                    statusCell.textContent = storedStatus;
-                }
-            });
-        }
-
-        // Fetch order statuses when the page loads
-        window.addEventListener('DOMContentLoaded', fetchOrderStatuses);
    </script>
 
 

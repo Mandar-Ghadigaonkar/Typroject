@@ -20,6 +20,34 @@ const form = document.getElementById('registrationForm');
             }
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('name');
+        
+            nameInput.addEventListener('input', function(event) {
+                const validName = event.target.value.replace(/[^a-zA-Z\s]/g, '');
+                if (event.target.value !== validName) {
+                    event.target.value = validName; // Reset the value to only valid characters
+                    alert('Only alphabetic characters and spaces are allowed in names.');
+                }
+            });
+        
+            const contactInput = document.getElementById('contact');
+            contactInput.addEventListener('input', function (event) {
+                const contactValue = event.target.value;
+                const sanitizedValue = contactValue.replace(/\D/g, '');
+                event.target.value = sanitizedValue;
+                if (sanitizedValue.length > 10) {
+                    alert("Contact number should not exceed 10 digits");
+                    event.target.value = sanitizedValue.slice(0, 10);
+                }
+            });
+        
+            // Add your existing form submission handler here
+        });
+        
+        // Additional existing JavaScript for form handling and other validations can remain as is
+        
+
         function registerUser() {
             const name = document.getElementById("name").value;
             const clas = document.getElementById("clas").value;
