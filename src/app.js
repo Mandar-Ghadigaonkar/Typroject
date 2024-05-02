@@ -188,7 +188,7 @@ app.post("/sendotp", (req, res) => {
         if (results[0] === undefined) {
           // User not found
           console.log("user not found");
-           res.redirect(`/forgott?errorMessage=${encodeURIComponent(errorMessage)}`); // Redirect with error message
+          res.status(200).json({ errorMessage: "User is not Exits." });
         } else {
           // User found
           console.log(results);

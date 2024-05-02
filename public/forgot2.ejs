@@ -36,32 +36,32 @@
 
 
         .go {
-    text-align: right; 
-    margin-top: -40rem;
-    margin-left: -97%;
-   
-}
+            text-align: right;
+            margin-top: -40rem;
+            margin-left: -97%;
 
-.go a {
-    text-decoration: none; 
-}
+        }
 
-.go input[type="submit"] {
-    background-color: #00ffe5; 
-    color: rgb(0, 0, 0); 
-    padding: 13px 80px 10px 21px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none; 
-    border-radius: 5px;
-    cursor: pointer; 
-    box-shadow: 10px 6px 30px black;
-    transition: background-color 0.3s; 
-}
+        .go a {
+            text-decoration: none;
+        }
 
-.go input[type="submit"]:hover {
-    background-color: #7fdbd5; 
-}
+        .go input[type="submit"] {
+            background-color: #00ffe5;
+            color: rgb(0, 0, 0);
+            padding: 13px 80px 10px 21px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 10px 6px 30px black;
+            transition: background-color 0.3s;
+        }
+
+        .go input[type="submit"]:hover {
+            background-color: #7fdbd5;
+        }
 
         .container {
             width: 400px;
@@ -200,7 +200,7 @@
         <div id="errorMessage" style="color: red;">
             <% if(errorMessage) { %>
                 <%= errorMessage %>
-            <% } %>
+                    <% } %>
         </div>
 
         <form id="resetPasswordForm" onsubmit="forgot()" action="/forgott" method="post">
@@ -223,45 +223,46 @@
         let sendbtn = document.getElementById('sendbtn')
         let otpInput = document.getElementById("otp")
         let unameInput = document.getElementById("uname")
+
         const sendOTP = () => {
-  let otp = document.getElementById("otp").value;
-  let uname = document.getElementById("uname").value;
+            let otp = document.getElementById("otp").value;
+            let uname = document.getElementById("uname").value;
 
-  const userData = {
-    uname: uname,
-  };
+            // const userData = {
+            //     uname: uname,
+            // };
 
-  if (uname.length != 0) {
-    fetch("http://localhost:8002/sendotp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.errorMessage) {
-          // User not found, display error message
-          document.getElementById("errorMessage").innerText = data.errorMessage;
-        } else {
-          // User found, display success message
-          alert(data.successMessage);
-          sendbtn.disabled = true;
-          otpInput.disabled = false;
-        }
-      })
-      .catch((error) => {
-        console.error("Forgot error:", error);
-        // Optionally, you can display an error message to the user
-      });
-  }
-};
+            if (uname.length != 0) {
+                fetch("http://localhost:8002/sendotp", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({uname}),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        if (data.errorMessage) {
+                            // User not found, display error message
+                            document.getElementById("errorMessage").innerText = data.errorMessage;
+                        } else {
+                            // User found, display success message
+                            alert(data.successMessage);
+                            sendbtn.disabled = true;
+                            otpInput.disabled = false;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("send otp error:", error);
+                        // Optionally, you can display an error message to the user
+                    });
+            }
+        };
 
 
         const forgot = (e) => {
@@ -275,12 +276,12 @@
             };
 
             fetch("http://localhost:8002/forgott", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userData),
-                })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            })
                 .then((response) => {
                     if (response.redirected) {
                         // If the response is a redirect, manually redirect the client
