@@ -188,7 +188,7 @@ app.post("/sendotp", (req, res) => {
         if (results[0] === undefined) {
           // User not found
           console.log("user not found");
-          res.status(200).json({ errorMessage: "User is not Exits." });
+          res.status(200).json({ errorMessage: "Email doesn't  match" });
         } else {
           // User found
           console.log(results);
